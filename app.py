@@ -1468,128 +1468,128 @@ medical_data = {
 # AI HEALTH CHATBOT
 # ==========================================
 
-elif menu == "🤖 Health Chatbot":
-
-    st.title("🤖 MediAssist AI Chatbot")
-
-    st.write("Ask questions like:")
-    st.write("- Symptoms of Fever")
-    st.write("- Causes of Diabetes")
-    st.write("- Treatment for Asthma")
-    st.write("- Prevention of Dengue")
-    st.write("- Doctor for Migraine")
-    st.write("- Uses of Paracetamol")
-
-    question = st.text_input("Ask your health question")
-
-    if st.button("Ask"):
-
-        q = question.lower()
-
-        found = False
-
-        # Greetings
-        if q in ["hi", "hello", "hey", "good morning", "good evening"]:
-
-            st.success("Hello 👋 Welcome to MediAssist AI!")
-
-            st.info("You can ask about symptoms, causes, treatment, prevention, doctors or medicines.")
-
-            found = True
-
-        # Disease Knowledge
-        for disease, info in medical_data.items():
-
-            if disease in q:
-
+    elif menu == "🤖 Health Chatbot":
+    
+        st.title("🤖 MediAssist AI Chatbot")
+    
+        st.write("Ask questions like:")
+        st.write("- Symptoms of Fever")
+        st.write("- Causes of Diabetes")
+        st.write("- Treatment for Asthma")
+        st.write("- Prevention of Dengue")
+        st.write("- Doctor for Migraine")
+        st.write("- Uses of Paracetamol")
+    
+        question = st.text_input("Ask your health question")
+    
+        if st.button("Ask"):
+    
+            q = question.lower()
+    
+            found = False
+    
+            # Greetings
+            if q in ["hi", "hello", "hey", "good morning", "good evening"]:
+    
+                st.success("Hello 👋 Welcome to MediAssist AI!")
+    
+                st.info("You can ask about symptoms, causes, treatment, prevention, doctors or medicines.")
+    
                 found = True
-
-                if "symptom" in q:
-
-                    st.subheader("Symptoms")
-
-                    for item in info["symptoms"]:
-                        st.write("✅", item)
-
-                elif "cause" in q:
-
-                    st.subheader("Causes")
-
-                    for item in info["causes"]:
-                        st.write("✅", item)
-
-                elif "treatment" in q:
-
-                    st.subheader("Treatment")
-
-                    for item in info["treatment"]:
-                        st.write("✅", item)
-
-                elif "prevent" in q:
-
-                    st.subheader("Prevention")
-
-                    for item in info["prevention"]:
-                        st.write("✅", item)
-
-                elif "doctor" in q:
-
-                    st.subheader("Recommended Specialist")
-
-                    st.success(info["doctor"])
-
-                else:
-
-                    st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
-
-                break
-
-        # Medicine Search
-        if not found and not medicine_df.empty:
-
-            for _, row in medicine_df.iterrows():
-
-                if row["Medicine"].lower() in q:
-
+    
+            # Disease Knowledge
+            for disease, info in medical_data.items():
+    
+                if disease in q:
+    
                     found = True
-
-                    st.success(row["Medicine"])
-
-                    st.write("### Uses")
-                    st.write(row["Uses"])
-
-                    st.write("### Dosage")
-                    st.write(row["Dosage"])
-
-                    st.write("### Side Effects")
-                    st.write(row["Side Effects"])
-
-                    st.write("### Warnings")
-                    st.write(row["Warnings"])
-
+    
+                    if "symptom" in q:
+    
+                        st.subheader("Symptoms")
+    
+                        for item in info["symptoms"]:
+                            st.write("✅", item)
+    
+                    elif "cause" in q:
+    
+                        st.subheader("Causes")
+    
+                        for item in info["causes"]:
+                            st.write("✅", item)
+    
+                    elif "treatment" in q:
+    
+                        st.subheader("Treatment")
+    
+                        for item in info["treatment"]:
+                            st.write("✅", item)
+    
+                    elif "prevent" in q:
+    
+                        st.subheader("Prevention")
+    
+                        for item in info["prevention"]:
+                            st.write("✅", item)
+    
+                    elif "doctor" in q:
+    
+                        st.subheader("Recommended Specialist")
+    
+                        st.success(info["doctor"])
+    
+                    else:
+    
+                        st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
+    
                     break
-
-        if not found:
-
-            st.warning("Sorry, I couldn't understand your question.")
-
-            st.info("""
-Try asking:
-
-• Symptoms of Fever
-
-• Causes of Diabetes
-
-• Treatment for Asthma
-
-• Prevention of Dengue
-
-• Doctor for Migraine
-
-• Uses of Paracetamol
-""")
-
-        st.success(answer)
+    
+            # Medicine Search
+            if not found and not medicine_df.empty:
+    
+                for _, row in medicine_df.iterrows():
+    
+                    if row["Medicine"].lower() in q:
+    
+                        found = True
+    
+                        st.success(row["Medicine"])
+    
+                        st.write("### Uses")
+                        st.write(row["Uses"])
+    
+                        st.write("### Dosage")
+                        st.write(row["Dosage"])
+    
+                        st.write("### Side Effects")
+                        st.write(row["Side Effects"])
+    
+                        st.write("### Warnings")
+                        st.write(row["Warnings"])
+    
+                        break
+    
+            if not found:
+    
+                st.warning("Sorry, I couldn't understand your question.")
+    
+                st.info("""
+    Try asking:
+    
+    • Symptoms of Fever
+    
+    • Causes of Diabetes
+    
+    • Treatment for Asthma
+    
+    • Prevention of Dengue
+    
+    • Doctor for Migraine
+    
+    • Uses of Paracetamol
+    """)
+    
+            st.success(answer)
 
 # ==========================================
 # ABOUT PAGE
