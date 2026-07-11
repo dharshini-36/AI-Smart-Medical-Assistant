@@ -227,8 +227,6 @@ if menu == "🏠 Home":
     - Health Recommendations
     """)
 
-    st.divider()
-
     
 
 # ==========================================
