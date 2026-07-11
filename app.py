@@ -229,15 +229,7 @@ if menu == "🏠 Home":
 
     st.divider()
 
-    st.error("""
-    ⚠ DISCLAIMER
-
-    This application is developed for educational purposes only.
-
-    It does not provide medical diagnosis.
-
-    Always consult a qualified healthcare professional.
-    """)
+    
 
 # ==========================================
 # PATIENT DETAILS
