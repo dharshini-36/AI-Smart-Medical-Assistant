@@ -8,8 +8,6 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import os
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import LabelEncoder
 
 # ==========================================
 # PAGE CONFIG
@@ -72,36 +70,6 @@ medical_data = {
         ],
 
         "doctor":"General Physician"
-
-    },
-
-    "diabetes":{
-
-        "symptoms":[
-            "Frequent urination",
-            "Excessive thirst",
-            "Blurred vision",
-            "Weight loss"
-        ],
-
-        "causes":[
-            "High blood sugar",
-            "Insulin resistance"
-        ],
-
-        "treatment":[
-            "Healthy diet",
-            "Exercise",
-            "Medicines prescribed by doctor"
-        ],
-
-        "prevention":[
-            "Exercise",
-            "Healthy food",
-            "Maintain weight"
-        ],
-
-        "doctor":"Endocrinologist"
 
     },
 
@@ -715,7 +683,7 @@ if menu == "🏠 Home":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.info("🤖 AI Disease Prediction")
+        st.info("🤖 Medicine Search")
 
     with col2:
         st.success("⚖ BMI Calculator")
@@ -738,9 +706,7 @@ if menu == "🏠 Home":
 
     st.divider()
     st.markdown("""
-### 🚀 Features
-
-✅ Patient Details Management
+### ### 🚀 Features
 
 ✅ BMI Calculator
 
@@ -751,8 +717,6 @@ if menu == "🏠 Home":
 ✅ Daily Health Tips
 
 ✅ AI Healthcare Chatbot
-
-✅ Doctor Recommendation
 """)
 
 # ==========================================
@@ -1093,33 +1057,32 @@ Try asking:
 
 elif menu == "About":
 
-    st.title("About MediAssist AI")
+    st.title("ℹ About MediAssist AI")
 
     st.markdown("""
 # 🏥 MediAssist AI
 
 An AI-powered healthcare assistant developed using:
 
-- Streamlit
 - Python
-- Machine Learning
-- Random Forest Classifier
-- EasyOCR
+- Streamlit
 - Pandas
 - NumPy
-- Scikit-Learn
+- EasyOCR
+- Pillow
+- OpenCV
 
 ## Features
 
-✅ Disease Prediction
-
 ✅ BMI Calculator
 
-✅ Medicine Information
+✅ Medicine Information Search
 
-✅ Prescription OCR
+✅ Prescription Reader (OCR)
 
-✅ Health Chatbot
+✅ Health Tips
+
+✅ AI Health Chatbot
 
 ## Developer
 
@@ -1128,12 +1091,10 @@ Developed by:
 **Dharshini Natarajan**
 
 B.Sc Computer Science with Artificial Intelligence
-
 """)
-st.markdown("---")
 
-st.caption(
-    "© 2026 MediAssist AI | "
-    "Educational Project | "
-    "Not a substitute for professional medical advice."
-)
+    st.markdown("---")
+
+    st.caption(
+        "© 2026 MediAssist AI | Educational Project | Not a substitute for professional medical advice."
+    )
