@@ -773,32 +773,44 @@ if menu == "🏠 Home":
         st.success("⚖ BMI Calculator")
 
     with col3:
-        st.warning("🩸 Blood Report Analysis")
+        st.warning("💊 Medicine Information")
 
     st.write("")
 
     col4, col5, col6 = st.columns(3)
 
     with col4:
-        st.info("💊 Medicine Information")
+        st.info("📄 Prescription Reader")
 
     with col5:
-        st.success("📄 Prescription OCR")
+        st.success("❤️ Health Tips")
 
     with col6:
-        st.warning("🤖 Health Chatbot")
+        st.warning("🤖 AI Health Chatbot")
 
     st.divider()
 
     st.subheader("✨ Features")
 
     st.markdown("""
-    - BMI Calculator
-    - Medicine Information Search
-    - Prescription OCR
-    - AI Healthcare Chatbot
-    - Health Recommendations
-    """)
+### 🚀 Features
+
+✅ Patient Details Management
+
+✅ BMI Calculator
+
+✅ Medicine Information Search
+
+✅ AI Prescription Reader (OCR)
+
+✅ Daily Health Tips
+
+✅ AI Healthcare Chatbot
+
+✅ Doctor Recommendation
+
+✅ Disease Symptoms, Causes, Treatment & Prevention
+""")
 
 # ==========================================
 # PATIENT DETAILS
@@ -808,94 +820,61 @@ elif menu == "👤 Patient Details":
 
     st.title("👤 Patient Details")
 
-    st.session_state.patient_name = st.text_input(
-        "Patient Name"
-    )
+    name = st.text_input("Full Name")
 
-    st.session_state.patient_age = st.number_input(
-        "Age",
-        min_value=1,
-        max_value=120,
-        value=20
-    )
+    age = st.number_input("Age", 1, 120)
 
-    st.session_state.patient_gender = st.selectbox(
+    gender = st.selectbox(
         "Gender",
-        [
-            "Male",
-            "Female",
-            "Other"
-        ]
+        ["Male", "Female", "Other"]
     )
 
     height = st.number_input(
         "Height (cm)",
-        min_value=50,
-        max_value=250,
-        value=170
+        50,
+        250
     )
 
     weight = st.number_input(
         "Weight (kg)",
-        min_value=10,
-        max_value=250,
-        value=65
+        10,
+        250
     )
 
     blood_group = st.selectbox(
         "Blood Group",
         [
-            "A+", "A-",
-            "B+", "B-",
-            "AB+", "AB-",
-            "O+", "O-"
+            "A+","A-","B+","B-",
+            "AB+","AB-","O+","O-"
         ]
     )
 
     allergies = st.text_area(
-        "Known Allergies"
-    )
-
-    history = st.text_area(
-        "Medical History"
+        "Known Allergies (Optional)"
     )
 
     if st.button("Save Details"):
 
-        st.success("Patient details saved successfully")
+        st.session_state["name"] = name
+        st.session_state["age"] = age
+        st.session_state["gender"] = gender
+        st.session_state["height"] = height
+        st.session_state["weight"] = weight
+        st.session_state["blood_group"] = blood_group
+        st.session_state["allergies"] = allergies
 
-        st.write("### Patient Summary")
-
-        st.write(
-            f"**Name:** {st.session_state.patient_name}"
-        )
-
-        st.write(
-            f"**Age:** {st.session_state.patient_age}"
-        )
-
-        st.write(
-            f"**Gender:** {st.session_state.patient_gender}"
-        )
-
-        st.write(
-            f"**Blood Group:** {blood_group}"
-        )
-
-        st.write(
-            f"**Allergies:** {allergies}"
-        )
-
-        st.write(
-            f"**Medical History:** {history}"
-        )
+        st.success("✅ Patient details saved successfully!")
 
 # ==========================================
 # BMI CALCULATOR
 # ==========================================
 
 elif menu == "⚖ BMI Calculator":
+if "name" in st.session_state:
 
+    st.write(
+        f"### Patient : {st.session_state['name']}"
+    )
     st.title("⚖ BMI Calculator")
 
     col1, col2 = st.columns(2)
@@ -970,6 +949,9 @@ elif menu == "⚖ BMI Calculator":
         for tip in tips:
             st.write("✅", tip)
 
+        st.success(
+    f"{st.session_state['name']}, your BMI is {bmi:.2f}"
+)
         st.info(
             "BMI is only a screening tool and does not diagnose body fat or medical conditions."
         )
@@ -1078,6 +1060,11 @@ elif menu == "📄 Prescription Reader":
 # ==========================================
 
 elif menu == "❤️ Health Tips":
+    if "name" in st.session_state:
+
+    st.write(
+        f"### Personalized Tips for {st.session_state['name']}"
+    )
 
     st.title("❤️ Daily Health Tips")
 
@@ -1103,7 +1090,12 @@ elif menu == "❤️ Health Tips":
 
 elif menu == "🤖 Health Chatbot":
 
-    st.title("🤖 MediAssist AI Chatbot")
+   if "name" in st.session_state:
+       st.title(
+        f"🤖 Hello {st.session_state['name']} 👋"
+    )
+   else:
+       st.title("🤖 MediAssist AI Chatbot")
 
     st.write("Ask questions like:")
     st.write("- Symptoms of Fever")
