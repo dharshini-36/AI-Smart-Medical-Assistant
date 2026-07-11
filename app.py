@@ -870,9 +870,8 @@ elif menu == "👤 Patient Details":
 # ==========================================
 
 elif menu == "⚖ BMI Calculator":
-if "name" in st.session_state:
-
-    st.write(
+    if "name" in st.session_state:
+        st.write(
         f"### Patient : {st.session_state['name']}"
     )
     st.title("⚖ BMI Calculator")
