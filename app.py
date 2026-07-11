@@ -68,7 +68,7 @@ def load_model():
         "label_encoder.pkl"
     )
 
-    return model, encoder
+return model, encoder
 
 model, encoder = load_model()
 
