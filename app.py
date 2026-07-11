@@ -864,7 +864,7 @@ elif menu == "📄 Prescription Reader":
 
             with st.spinner("Reading Prescription..."):
 
-                reader = easyocr.Reader(['en'])
+                reader = easyocr.Reader(['en'],gpu=False)
 
                 result = reader.readtext(
                     np.array(image)
