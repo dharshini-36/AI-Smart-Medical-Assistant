@@ -633,7 +633,7 @@ st.markdown("""
     border-radius:10px;
     text-align:center;
 }
-
+</style>""")
 
 # ==========================================
 # SIDEBAR
