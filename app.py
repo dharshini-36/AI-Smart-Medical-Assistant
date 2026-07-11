@@ -742,7 +742,7 @@ menu = st.sidebar.radio(
         "📄 Prescription Reader",
         "❤️ Health Tips",
         "🤖 Health Chatbot",
-        "ℹ About"
+        "About"
     ]
 )
 
@@ -1212,9 +1212,9 @@ Try asking:
 # ABOUT PAGE
 # ==========================================
 
-elif menu == "ℹ About":
+elif menu == "About":
 
-    st.title("ℹ About MediAssist AI")
+    st.title("About MediAssist AI")
 
     st.markdown("""
 # 🏥 MediAssist AI
