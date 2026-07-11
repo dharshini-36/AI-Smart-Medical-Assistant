@@ -840,9 +840,6 @@ elif menu == "💊 Medicine Search":
 # ==========================================
 
 elif menu == "📄 Prescription Reader":
-
-    import easyocr
-
     st.title("📄 AI Prescription Reader")
 
     uploaded_file = st.file_uploader(
