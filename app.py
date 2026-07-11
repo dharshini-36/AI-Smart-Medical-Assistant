@@ -1117,8 +1117,6 @@ An AI-powered healthcare assistant developed using:
 
 ✅ BMI Calculator
 
-✅ Blood Report Analysis
-
 ✅ Medicine Information
 
 ✅ Prescription OCR
