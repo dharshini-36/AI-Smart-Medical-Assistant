@@ -68,42 +68,7 @@ def load_model():
         "label_encoder.pkl"
     )
 
-return model, encoder
-
-model, encoder = load_model()
-
-# ---------------------------------
-# Train model automatically
-# ---------------------------------
-
-df = pd.read_csv("disease_dataset.csv")
-
-X = df.drop("Disease", axis=1)
-
-y = df["Disease"]
-
-encoder = LabelEncoder()
-
-y = encoder.fit_transform(y)
-
-model = RandomForestClassifier(
-    n_estimators=200,
-    random_state=42
-)
-
-model.fit(X, y)
-
-joblib.dump(
-    model,
-    "disease_model.pkl"
-)
-
-joblib.dump(
-    encoder,
-    "label_encoder.pkl"
-)
-
-return model, encoder
+    return model, encoder
 
 
 model, encoder = load_model()
