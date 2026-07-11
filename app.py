@@ -70,7 +70,6 @@ def load_model():
 
     return model, encoder
 
-
 model, encoder = load_model()
 
 # ==========================================
