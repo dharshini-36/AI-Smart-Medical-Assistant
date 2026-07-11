@@ -839,6 +839,77 @@ elif menu == "💊 Medicine Search":
 # PRESCRIPTION READER (OCR)
 # ==========================================
 
+elif menu == "📄 Prescription Reader":
+    import easyocr
+    st.title("📄 AI Prescription Reader")
+
+    uploaded_file = st.file_uploader(
+        "Upload Prescription Image",
+        type=["png", "jpg", "jpeg"]
+    )
+
+    if uploaded_file is not None:
+
+        image = Image.open(uploaded_file)
+
+        st.image(
+            image,
+            caption="Uploaded Prescription",
+            use_container_width=True
+        )
+
+        if st.button("Read Prescription"):
+
+            with st.spinner("Reading Prescription..."):
+
+                reader = easyocr.Reader(['en'],gpu=False)
+
+                result = reader.readtext(
+                    np.array(image)
+                )
+
+                extracted_text = ""
+
+                for item in result:
+                    extracted_text += item[1] + "\n"
+
+                st.subheader("Extracted Text")
+
+                st.text_area(
+                    "Result",
+                    extracted_text,
+                    height=250
+                )
+
+                st.download_button(
+                    "Download Text",
+                    extracted_text,
+                    file_name="prescription.txt"
+                )
+
+# ==========================================
+# HEALTH TIPS
+# ==========================================
+
+elif menu == "❤️ Health Tips":
+
+    st.title("❤️ Daily Health Tips")
+
+    tips = [
+        "Drink at least 2-3 litres of water daily.",
+        "Sleep for 7-8 hours every night.",
+        "Exercise for at least 30 minutes.",
+        "Eat fresh fruits and vegetables.",
+        "Reduce sugar and salt intake.",
+        "Avoid smoking and alcohol.",
+        "Wash your hands regularly.",
+        "Take medicines only as prescribed.",
+        "Manage stress through meditation.",
+        "Schedule regular health checkups."
+    ]
+
+    for tip in tips:
+        st.success("✅ " + tip)
 
 # ==========================================
 # AI HEALTH CHATBOT
