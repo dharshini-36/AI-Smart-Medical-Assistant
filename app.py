@@ -1086,14 +1086,11 @@ elif menu == "❤️ Health Tips":
 # ==========================================
 
 elif menu == "🤖 Health Chatbot":
-
-   if "name" in st.session_state:
-       st.title(
-        f"🤖 Hello {st.session_state['name']} 👋"
-    )
-   else:
-       st.title("🤖 MediAssist AI Chatbot")
-
+    if "name" in st.session_state:
+        st.title(
+        f"🤖 Hello {st.session_state['name']} 👋")
+    else:
+        st.title("🤖 MediAssist AI Chatbot")
     st.write("Ask questions like:")
     st.write("- Symptoms of Fever")
     st.write("- Causes of Diabetes")
