@@ -736,7 +736,6 @@ menu = st.sidebar.radio(
     "Navigation",
     [
         "🏠 Home",
-        "👤 Patient Details",
         "⚖ BMI Calculator",
         "💊 Medicine Search",
         "📄 Prescription Reader",
@@ -813,67 +812,11 @@ if menu == "🏠 Home":
 """)
 
 # ==========================================
-# PATIENT DETAILS
-# ==========================================
-
-elif menu == "👤 Patient Details":
-
-    st.title("👤 Patient Details")
-
-    name = st.text_input("Full Name")
-
-    age = st.number_input("Age", 1, 120)
-
-    gender = st.selectbox(
-        "Gender",
-        ["Male", "Female", "Other"]
-    )
-
-    height = st.number_input(
-        "Height (cm)",
-        50,
-        250
-    )
-
-    weight = st.number_input(
-        "Weight (kg)",
-        10,
-        250
-    )
-
-    blood_group = st.selectbox(
-        "Blood Group",
-        [
-            "A+","A-","B+","B-",
-            "AB+","AB-","O+","O-"
-        ]
-    )
-
-    allergies = st.text_area(
-        "Known Allergies (Optional)"
-    )
-
-    if st.button("Save Details"):
-
-        st.session_state["name"] = name
-        st.session_state["age"] = age
-        st.session_state["gender"] = gender
-        st.session_state["height"] = height
-        st.session_state["weight"] = weight
-        st.session_state["blood_group"] = blood_group
-        st.session_state["allergies"] = allergies
-
-        st.success("✅ Patient details saved successfully!")
-
-# ==========================================
 # BMI CALCULATOR
 # ==========================================
 
 elif menu == "⚖ BMI Calculator":
-    if "name" in st.session_state:
-        st.write(
-        f"### Patient : {st.session_state['name']}"
-    )
+
     st.title("⚖ BMI Calculator")
 
     col1, col2 = st.columns(2)
@@ -948,9 +891,6 @@ elif menu == "⚖ BMI Calculator":
         for tip in tips:
             st.write("✅", tip)
 
-        st.success(
-    f"{st.session_state['name']}, your BMI is {bmi:.2f}"
-)
         st.info(
             "BMI is only a screening tool and does not diagnose body fat or medical conditions."
         )
@@ -1059,9 +999,6 @@ elif menu == "📄 Prescription Reader":
 # ==========================================
 
 elif menu == "❤️ Health Tips":
-    if "name" in st.session_state:
-        st.write(
-        f"### Personalized Tips for {st.session_state['name']}")
 
     st.title("❤️ Daily Health Tips")
 
@@ -1086,11 +1023,9 @@ elif menu == "❤️ Health Tips":
 # ==========================================
 
 elif menu == "🤖 Health Chatbot":
-    if "name" in st.session_state:
-        st.title(
-        f"🤖 Hello {st.session_state['name']} 👋")
-    else:
-        st.title("🤖 MediAssist AI Chatbot")
+
+    st.title("🤖 MediAssist AI Chatbot")
+
     st.write("Ask questions like:")
     st.write("- Symptoms of Fever")
     st.write("- Causes of Diabetes")
