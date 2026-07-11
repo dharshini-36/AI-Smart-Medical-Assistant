@@ -19,7 +19,7 @@ from sklearn.preprocessing import LabelEncoder
 st.set_page_config(
     page_title="MediAssist AI",
     page_icon="🏥",
-    layout="wide"
+    layout="wide"version
 )
 
 # ==========================================
