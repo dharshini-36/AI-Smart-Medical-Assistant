@@ -19,7 +19,8 @@ from sklearn.preprocessing import LabelEncoder
 st.set_page_config(
     page_title="MediAssist AI",
     page_icon="🏥",
-    layout="wide"
+    layout="wide"version
+    
 )
 
 # ==========================================
@@ -1265,11 +1266,6 @@ Developed by:
 **Dharshini Natarajan**
 
 B.Sc Computer Science with Artificial Intelligence
-
-## Version
-
-Version 1.0
-""")
 
 # ==========================================
 # FOOTER
