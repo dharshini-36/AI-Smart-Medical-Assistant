@@ -1060,10 +1060,8 @@ elif menu == "📄 Prescription Reader":
 
 elif menu == "❤️ Health Tips":
     if "name" in st.session_state:
-
-    st.write(
-        f"### Personalized Tips for {st.session_state['name']}"
-    )
+        st.write(
+        f"### Personalized Tips for {st.session_state['name']}")
 
     st.title("❤️ Daily Health Tips")
 
