@@ -1266,9 +1266,6 @@ Developed by:
 
 B.Sc Computer Science with Artificial Intelligence
 
-# ==========================================
-# FOOTER
-# ==========================================
 """)
 st.markdown("---")
 
