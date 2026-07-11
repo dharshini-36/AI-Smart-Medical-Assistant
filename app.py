@@ -1589,7 +1589,7 @@ Try asking:
 • Uses of Paracetamol
 """)
 
-        st.success(answer)
+st.success(answer)
 
 # ==========================================
 # ABOUT PAGE
