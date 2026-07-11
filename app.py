@@ -750,13 +750,6 @@ menu = st.sidebar.radio(
 # ==========================================
 
 if menu == "🏠 Home":
-    st.write("🏥 Welcome to MediAssist AI
-        ✔ BMI Calculator
-        ✔ Medicine Search
-        ✔ Prescription Reader
-        ✔ AI Health Chatbot
-        ✔ Daily Health Tips")
-
     st.markdown(
         "<div class='title'>🏥 MediAssist AI</div>",
         unsafe_allow_html=True
@@ -813,9 +806,6 @@ if menu == "🏠 Home":
 
 ✅ Disease Symptoms, Causes, Treatment & Prevention
 """)
-
-st.write("💡 Disclaimer:
-This application provides educational information only and is not a substitute for professional medical advice.")
 
 # ==========================================
 # BMI CALCULATOR
