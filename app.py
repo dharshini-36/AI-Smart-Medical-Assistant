@@ -6,11 +6,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
 from PIL import Image
 import os
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.preprocessing import LabelEncoder
 
 # ==========================================
 # PAGE CONFIG
