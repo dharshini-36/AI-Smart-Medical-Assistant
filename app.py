@@ -92,6 +92,69 @@ medicine_df = load_medicine_data()
 
 medical_data = {
 
+    "fever":{
+
+        "symptoms":[
+            "High body temperature",
+            "Chills",
+            "Headache",
+            "Body pain",
+            "Weakness"
+        ],
+
+        "causes":[
+            "Viral infection",
+            "Bacterial infection",
+            "Flu",
+            "COVID-19"
+        ],
+
+        "treatment":[
+            "Drink fluids",
+            "Take rest",
+            "Paracetamol (if prescribed)"
+        ],
+
+        "prevention":[
+            "Wash hands",
+            "Drink clean water",
+            "Maintain hygiene"
+        ],
+
+        "doctor":"General Physician"
+
+    },
+
+    "diabetes":{
+
+        "symptoms":[
+            "Frequent urination",
+            "Excessive thirst",
+            "Blurred vision",
+            "Weight loss"
+        ],
+
+        "causes":[
+            "High blood sugar",
+            "Insulin resistance"
+        ],
+
+        "treatment":[
+            "Healthy diet",
+            "Exercise",
+            "Medicines prescribed by doctor"
+        ],
+
+        "prevention":[
+            "Exercise",
+            "Healthy food",
+            "Maintain weight"
+        ],
+
+        "doctor":"Endocrinologist"
+
+    },
+
     "flu": {
         "symptoms": [
             "High fever",
