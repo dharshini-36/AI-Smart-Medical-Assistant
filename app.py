@@ -83,17 +83,7 @@ def load_medicine_data():
     except Exception:
         return pd.DataFrame()
 
-
-@st.cache_data
-def load_blood_ranges():
-    try:
-        return pd.read_csv("blood_ranges.csv")
-    except Exception:
-        return pd.DataFrame()
-
-
 medicine_df = load_medicine_data()
-blood_df = load_blood_ranges()
 
 # ==========================================
 # CUSTOM CSS
@@ -162,7 +152,6 @@ menu = st.sidebar.radio(
         "👤 Patient Details",
         "🤖 Disease Prediction",
         "⚖ BMI Calculator",
-        "🩸 Blood Report Analyzer",
         "💊 Medicine Search",
         "📄 Prescription Reader",
         "❤️ Health Tips",
@@ -718,132 +707,6 @@ elif menu == "⚖ BMI Calculator":
         )
 
 # ==========================================
-# BLOOD REPORT ANALYZER
-# ==========================================
-
-elif menu == "🩸 Blood Report Analyzer":
-
-    st.title("🩸 Blood Report Analyzer")
-
-    st.write("Enter your blood test values.")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        hemoglobin = st.number_input(
-            "Hemoglobin (g/dL)",
-            0.0,
-            25.0,
-            13.5
-        )
-
-        wbc = st.number_input(
-            "WBC Count (/µL)",
-            0,
-            30000,
-            7000
-        )
-
-        rbc = st.number_input(
-            "RBC Count (million/µL)",
-            0.0,
-            10.0,
-            5.0
-        )
-
-    with col2:
-        platelets = st.number_input(
-            "Platelets (/µL)",
-            0,
-            1000000,
-            250000
-        )
-
-        sugar = st.number_input(
-            "Blood Sugar (mg/dL)",
-            0,
-            500,
-            100
-        )
-
-    if st.button("Analyze Report"):
-
-        st.subheader("Analysis Result")
-
-        # Hemoglobin
-        if hemoglobin < 12:
-            st.error("🔴 Low Hemoglobin (Possible Anemia)")
-        elif hemoglobin > 17:
-            st.warning("🟡 High Hemoglobin")
-        else:
-            st.success("🟢 Hemoglobin Normal")
-
-        # WBC
-        if wbc < 4000:
-            st.error("🔴 Low WBC Count")
-        elif wbc > 11000:
-            st.warning("🟡 High WBC Count")
-        else:
-            st.success("🟢 WBC Count Normal")
-
-        # RBC
-        if rbc < 4.2:
-            st.error("🔴 Low RBC Count")
-        elif rbc > 6.1:
-            st.warning("🟡 High RBC Count")
-        else:
-            st.success("🟢 RBC Count Normal")
-
-        # Platelets
-        if platelets < 150000:
-            st.error("🔴 Low Platelet Count")
-        elif platelets > 450000:
-            st.warning("🟡 High Platelet Count")
-        else:
-            st.success("🟢 Platelet Count Normal")
-
-        # Blood Sugar
-        if sugar < 70:
-            st.error("🔴 Low Blood Sugar")
-        elif sugar > 140:
-            st.warning("🟡 High Blood Sugar")
-        else:
-            st.success("🟢 Blood Sugar Normal")
-
-        st.divider()
-
-        st.subheader("Doctor Recommendation")
-
-        if sugar > 140:
-            st.write("✅ Endocrinologist")
-
-        if platelets < 150000:
-            st.write("✅ General Physician")
-
-        if hemoglobin < 12:
-            st.write("✅ Hematologist")
-
-        if wbc > 11000:
-            st.write("✅ General Physician")
-
-        if (
-            12 <= hemoglobin <= 17
-            and 4000 <= wbc <= 11000
-            and 4.2 <= rbc <= 6.1
-            and 150000 <= platelets <= 450000
-            and 70 <= sugar <= 140
-        ):
-            st.success(
-                "Your blood report appears to be within normal limits."
-            )
-
-        st.divider()
-
-        st.warning(
-            "This analysis is for educational purposes only and should not replace professional medical advice."
-        )
-
-# ==========================================
 # MEDICINE SEARCH
 # ==========================================
 
@@ -965,93 +828,766 @@ elif menu == "❤️ Health Tips":
 
     for tip in tips:
         st.success("✅ " + tip)
+medical_data = {
 
+"flu":{
+
+"symptoms":[
+"High fever",
+"Cough",
+"Body pain",
+"Fatigue",
+"Headache",
+"Chills"
+],
+
+"causes":[
+"Influenza virus"
+],
+
+"treatment":[
+"Take adequate rest",
+"Drink plenty of fluids",
+"Take medicines prescribed by your doctor"
+],
+
+"prevention":[
+"Wash hands frequently",
+"Cover mouth while coughing",
+"Annual flu vaccination"
+],
+
+"doctor":"General Physician"
+
+},
+
+"common cold":{
+
+"symptoms":[
+"Runny nose",
+"Sneezing",
+"Sore throat",
+"Cough",
+"Headache"
+],
+
+"causes":[
+"Rhinovirus infection"
+],
+
+"treatment":[
+"Drink warm fluids",
+"Take rest",
+"Steam inhalation"
+],
+
+"prevention":[
+"Wash hands",
+"Avoid close contact with infected people"
+],
+
+"doctor":"General Physician"
+
+},
+
+"covid-19":{
+
+"symptoms":[
+"Fever",
+"Cough",
+"Loss of smell",
+"Loss of taste",
+"Shortness of breath",
+"Fatigue"
+],
+
+"causes":[
+"SARS-CoV-2 virus"
+],
+
+"treatment":[
+"Rest",
+"Drink fluids",
+"Consult doctor if symptoms worsen"
+],
+
+"prevention":[
+"Wear a mask",
+"Wash hands",
+"Maintain social distancing"
+],
+
+"doctor":"General Physician"
+
+},
+
+"typhoid":{
+
+"symptoms":[
+"High fever",
+"Headache",
+"Abdominal pain",
+"Weakness",
+"Loss of appetite"
+],
+
+"causes":[
+"Salmonella Typhi bacteria"
+],
+
+"treatment":[
+"Complete antibiotic course",
+"Drink clean water",
+"Eat soft foods"
+],
+
+"prevention":[
+"Drink boiled water",
+"Eat hygienic food"
+],
+
+"doctor":"General Physician"
+
+},
+
+"migraine":{
+
+"symptoms":[
+"Severe headache",
+"Nausea",
+"Vomiting",
+"Sensitivity to light",
+"Blurred vision"
+],
+
+"causes":[
+"Stress",
+"Hormonal changes",
+"Lack of sleep"
+],
+
+"treatment":[
+"Rest in a dark room",
+"Take prescribed medicine",
+"Stay hydrated"
+],
+
+"prevention":[
+"Sleep well",
+"Avoid stress",
+"Avoid trigger foods"
+],
+
+"doctor":"Neurologist"
+
+},
+"food poisoning":{
+
+"symptoms":[
+"Nausea",
+"Vomiting",
+"Diarrhea",
+"Abdominal pain",
+"Fever",
+"Dehydration"
+],
+
+"causes":[
+"Contaminated food",
+"Bacteria",
+"Viruses",
+"Food toxins"
+],
+
+"treatment":[
+"Drink ORS",
+"Stay hydrated",
+"Eat light foods",
+"Consult a doctor if symptoms are severe"
+],
+
+"prevention":[
+"Eat freshly cooked food",
+"Wash hands before eating",
+"Store food properly"
+],
+
+"doctor":"General Physician"
+
+},
+
+"heart disease":{
+
+"symptoms":[
+"Chest pain",
+"Shortness of breath",
+"Fatigue",
+"Palpitations",
+"Dizziness"
+],
+
+"causes":[
+"High cholesterol",
+"High blood pressure",
+"Smoking",
+"Diabetes",
+"Obesity"
+],
+
+"treatment":[
+"Take prescribed medicines",
+"Maintain a healthy diet",
+"Exercise regularly",
+"Regular medical checkups"
+],
+
+"prevention":[
+"Avoid smoking",
+"Exercise daily",
+"Eat a heart-healthy diet",
+"Control blood pressure"
+],
+
+"doctor":"Cardiologist"
+
+},
+
+"diabetes":{
+
+"symptoms":[
+"Frequent urination",
+"Excessive thirst",
+"Blurred vision",
+"Weight loss",
+"Fatigue"
+],
+
+"causes":[
+"Insulin deficiency",
+"Insulin resistance",
+"Genetic factors"
+],
+
+"treatment":[
+"Monitor blood sugar",
+"Exercise regularly",
+"Follow a healthy diet",
+"Take prescribed medicines"
+],
+
+"prevention":[
+"Maintain healthy weight",
+"Exercise daily",
+"Reduce sugar intake"
+],
+
+"doctor":"Endocrinologist"
+
+},
+
+"hypertension":{
+
+"symptoms":[
+"Headache",
+"Dizziness",
+"Chest pain",
+"Blurred vision",
+"Fatigue"
+],
+
+"causes":[
+"High salt intake",
+"Stress",
+"Obesity",
+"Family history"
+],
+
+"treatment":[
+"Take blood pressure medicines",
+"Reduce salt intake",
+"Exercise regularly"
+],
+
+"prevention":[
+"Eat healthy foods",
+"Reduce stress",
+"Maintain healthy weight"
+],
+
+"doctor":"Cardiologist"
+
+},
+
+"asthma":{
+
+"symptoms":[
+"Wheezing",
+"Shortness of breath",
+"Cough",
+"Chest tightness"
+],
+
+"causes":[
+"Allergies",
+"Dust",
+"Cold air",
+"Respiratory infections"
+],
+
+"treatment":[
+"Use inhaler",
+"Take prescribed medicines",
+"Avoid triggers"
+],
+
+"prevention":[
+"Avoid dust",
+"Do not smoke",
+"Carry inhaler"
+],
+
+"doctor":"Pulmonologist"
+
+},
+"allergy":{
+
+"symptoms":[
+"Skin rash",
+"Itching",
+"Sneezing",
+"Runny nose",
+"Watery eyes"
+],
+
+"causes":[
+"Dust",
+"Pollen",
+"Pet dander",
+"Certain foods",
+"Medicines"
+],
+
+"treatment":[
+"Take antihistamines",
+"Avoid allergens",
+"Consult a doctor if symptoms worsen"
+],
+
+"prevention":[
+"Keep surroundings clean",
+"Avoid known allergens",
+"Wear a mask in dusty areas"
+],
+
+"doctor":"Dermatologist / Allergist"
+
+},
+
+"arthritis":{
+
+"symptoms":[
+"Joint pain",
+"Joint stiffness",
+"Swelling",
+"Reduced movement"
+],
+
+"causes":[
+"Age",
+"Joint wear and tear",
+"Autoimmune disorders"
+],
+
+"treatment":[
+"Exercise regularly",
+"Pain relief medicines",
+"Physiotherapy"
+],
+
+"prevention":[
+"Maintain healthy weight",
+"Exercise daily",
+"Avoid joint injuries"
+],
+
+"doctor":"Orthopedic Specialist"
+
+},
+
+"depression":{
+
+"symptoms":[
+"Persistent sadness",
+"Loss of interest",
+"Fatigue",
+"Sleep problems",
+"Difficulty concentrating"
+],
+
+"causes":[
+"Stress",
+"Genetics",
+"Chemical imbalance",
+"Life events"
+],
+
+"treatment":[
+"Counselling",
+"Psychotherapy",
+"Medicines prescribed by psychiatrist"
+],
+
+"prevention":[
+"Exercise regularly",
+"Maintain social connections",
+"Seek help early"
+],
+
+"doctor":"Psychiatrist"
+
+},
+
+"anxiety disorder":{
+
+"symptoms":[
+"Excessive worry",
+"Restlessness",
+"Fast heartbeat",
+"Sweating",
+"Difficulty sleeping"
+],
+
+"causes":[
+"Stress",
+"Genetics",
+"Traumatic experiences"
+],
+
+"treatment":[
+"Counselling",
+"Breathing exercises",
+"Medicines if prescribed"
+],
+
+"prevention":[
+"Meditation",
+"Regular exercise",
+"Adequate sleep"
+],
+
+"doctor":"Psychologist / Psychiatrist"
+
+},
+
+"gerd":{
+
+"symptoms":[
+"Heartburn",
+"Acid reflux",
+"Chest discomfort",
+"Difficulty swallowing"
+],
+
+"causes":[
+"Weak lower esophageal sphincter",
+"Obesity",
+"Spicy foods",
+"Large meals"
+],
+
+"treatment":[
+"Take antacids or prescribed medicines",
+"Avoid spicy foods",
+"Eat smaller meals"
+],
+
+"prevention":[
+"Maintain healthy weight",
+"Avoid lying down after meals",
+"Reduce caffeine intake"
+],
+
+"doctor":"Gastroenterologist"
+
+},
+"constipation":{
+
+"symptoms":[
+"Infrequent bowel movements",
+"Hard stools",
+"Abdominal discomfort",
+"Bloating"
+],
+
+"causes":[
+"Low fiber diet",
+"Not drinking enough water",
+"Lack of exercise"
+],
+
+"treatment":[
+"Drink more water",
+"Eat fiber-rich foods",
+"Exercise regularly"
+],
+
+"prevention":[
+"Eat fruits and vegetables",
+"Drink 2-3 litres of water daily",
+"Stay physically active"
+],
+
+"doctor":"Gastroenterologist"
+
+},
+
+"ear infection":{
+
+"symptoms":[
+"Ear pain",
+"Difficulty hearing",
+"Fever",
+"Fluid discharge from ear"
+],
+
+"causes":[
+"Bacterial infection",
+"Viral infection"
+],
+
+"treatment":[
+"Take prescribed antibiotics",
+"Keep ear dry",
+"Consult an ENT specialist"
+],
+
+"prevention":[
+"Maintain ear hygiene",
+"Avoid inserting objects into the ear"
+],
+
+"doctor":"ENT Specialist"
+
+},
+
+"conjunctivitis":{
+
+"symptoms":[
+"Red eyes",
+"Itchy eyes",
+"Watery eyes",
+"Eye discharge"
+],
+
+"causes":[
+"Virus",
+"Bacteria",
+"Allergy"
+],
+
+"treatment":[
+"Use prescribed eye drops",
+"Keep eyes clean",
+"Avoid touching eyes"
+],
+
+"prevention":[
+"Wash hands frequently",
+"Do not share towels",
+"Avoid rubbing eyes"
+],
+
+"doctor":"Ophthalmologist"
+
+},
+
+"back strain":{
+
+"symptoms":[
+"Back pain",
+"Muscle stiffness",
+"Difficulty bending",
+"Muscle spasms"
+],
+
+"causes":[
+"Heavy lifting",
+"Poor posture",
+"Sudden movements"
+],
+
+"treatment":[
+"Take rest",
+"Apply ice or heat",
+"Pain relief medicines if prescribed"
+],
+
+"prevention":[
+"Maintain proper posture",
+"Exercise regularly",
+"Lift heavy objects correctly"
+],
+
+"doctor":"Orthopedic Specialist"
+
+},
+
+"dengue":{
+
+"symptoms":[
+"High fever",
+"Severe headache",
+"Body pain",
+"Joint pain",
+"Skin rash",
+"Nausea"
+],
+
+"causes":[
+"Dengue virus spread by Aedes mosquitoes"
+],
+
+"treatment":[
+"Drink plenty of fluids",
+"Take adequate rest",
+"Consult a doctor immediately"
+],
+
+"prevention":[
+"Use mosquito nets",
+"Remove stagnant water",
+"Use mosquito repellent"
+],
+
+"doctor":"General Physician"
+
+}
+
+}
 # ==========================================
 # AI HEALTH CHATBOT
 # ==========================================
 
 elif menu == "🤖 Health Chatbot":
 
-    st.title("🤖 AI Health Chatbot")
+    st.title("🤖 MediAssist AI Chatbot")
 
-    st.info(
-        "Ask simple health-related questions. "
-        "This chatbot is for educational purposes only."
-    )
+    st.write("Ask questions like:")
+    st.write("- Symptoms of Fever")
+    st.write("- Causes of Diabetes")
+    st.write("- Treatment for Asthma")
+    st.write("- Prevention of Dengue")
+    st.write("- Doctor for Migraine")
+    st.write("- Uses of Paracetamol")
 
-    question = st.text_input(
-        "Ask your question"
-    )
+    question = st.text_input("Ask your health question")
 
-    if st.button("Ask AI"):
+    if st.button("Ask"):
 
         q = question.lower()
 
-        answer = (
-            "Please consult a qualified healthcare professional "
-            "for accurate medical advice."
-        )
+        found = False
 
-        if "fever" in q:
-            answer = (
-                "Fever may indicate an infection. "
-                "Drink plenty of fluids, take adequate rest, "
-                "and consult a doctor if it lasts more than 2 days."
-            )
+        # Greetings
+        if q in ["hi", "hello", "hey", "good morning", "good evening"]:
 
-        elif "cold" in q or "cough" in q:
-            answer = (
-                "A common cold usually improves with rest, warm fluids, "
-                "and hydration. If symptoms become severe, visit a doctor."
-            )
+            st.success("Hello 👋 Welcome to MediAssist AI!")
 
-        elif "headache" in q:
-            answer = (
-                "Headaches can occur due to stress, dehydration, "
-                "or lack of sleep. Drink water and rest."
-            )
+            st.info("You can ask about symptoms, causes, treatment, prevention, doctors or medicines.")
 
-        elif "diabetes" in q:
-            answer = (
-                "Monitor your blood sugar regularly, "
-                "follow a balanced diet, and exercise daily."
-            )
+            found = True
 
-        elif "blood pressure" in q:
-            answer = (
-                "Monitor your blood pressure regularly, "
-                "reduce salt intake, and exercise."
-            )
+        # Disease Knowledge
+        for disease, info in medical_data.items():
 
-        elif "covid" in q:
-            answer = (
-                "If you have COVID-like symptoms, "
-                "consult a healthcare provider and follow local guidelines."
-            )
+            if disease in q:
 
-        elif "dengue" in q:
-            answer = (
-                "Drink plenty of fluids, monitor your platelet count, "
-                "and seek medical care immediately."
-            )
+                found = True
 
-        elif "heart" in q:
-            answer = (
-                "Chest pain or symptoms related to the heart "
-                "require immediate medical attention."
-            )
+                if "symptom" in q:
 
-        elif "vomiting" in q:
-            answer = (
-                "Drink ORS or other fluids to stay hydrated. "
-                "Consult a doctor if vomiting is persistent."
-            )
+                    st.subheader("Symptoms")
 
-        elif "medicine" in q:
-            answer = (
-                "Always take medicines only as prescribed "
-                "by a qualified healthcare professional."
-            )
+                    for item in info["symptoms"]:
+                        st.write("✅", item)
+
+                elif "cause" in q:
+
+                    st.subheader("Causes")
+
+                    for item in info["causes"]:
+                        st.write("✅", item)
+
+                elif "treatment" in q:
+
+                    st.subheader("Treatment")
+
+                    for item in info["treatment"]:
+                        st.write("✅", item)
+
+                elif "prevent" in q:
+
+                    st.subheader("Prevention")
+
+                    for item in info["prevention"]:
+                        st.write("✅", item)
+
+                elif "doctor" in q:
+
+                    st.subheader("Recommended Specialist")
+
+                    st.success(info["doctor"])
+
+                else:
+
+                    st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
+
+                break
+
+        # Medicine Search
+        if not found and not medicine_df.empty:
+
+            for _, row in medicine_df.iterrows():
+
+                if row["Medicine"].lower() in q:
+
+                    found = True
+
+                    st.success(row["Medicine"])
+
+                    st.write("### Uses")
+                    st.write(row["Uses"])
+
+                    st.write("### Dosage")
+                    st.write(row["Dosage"])
+
+                    st.write("### Side Effects")
+                    st.write(row["Side Effects"])
+
+                    st.write("### Warnings")
+                    st.write(row["Warnings"])
+
+                    break
+
+        if not found:
+
+            st.warning("Sorry, I couldn't understand your question.")
+
+            st.info("""
+Try asking:
+
+• Symptoms of Fever
+
+• Causes of Diabetes
+
+• Treatment for Asthma
+
+• Prevention of Dengue
+
+• Doctor for Migraine
+
+• Uses of Paracetamol
+""")
 
         st.success(answer)
 
