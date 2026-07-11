@@ -753,8 +753,6 @@ if menu == "🏠 Home":
 ✅ AI Healthcare Chatbot
 
 ✅ Doctor Recommendation
-
-✅ Disease Symptoms, Causes, Treatment & Prevention
 """)
 
 # ==========================================
