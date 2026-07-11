@@ -6,8 +6,11 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import joblib
 from PIL import Image
 import os
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
 
 # ==========================================
 # PAGE CONFIG
@@ -22,6 +25,52 @@ st.set_page_config(
 # ==========================================
 # LOAD MODEL
 # ==========================================
+
+@st.cache_resource
+def load_model():
+
+    # If model files already exist, load them
+    if os.path.exists("disease_model.pkl") and os.path.exists("label_encoder.pkl"):
+
+        model = joblib.load("disease_model.pkl")
+        encoder = joblib.load("label_encoder.pkl")
+
+        return model, encoder
+
+    # ---------------------------------
+    # Train model automatically
+    # ---------------------------------
+
+    df = pd.read_csv("disease_dataset.csv")
+
+    X = df.drop("Disease", axis=1)
+
+    y = df["Disease"]
+
+    encoder = LabelEncoder()
+
+    y = encoder.fit_transform(y)
+
+    model = RandomForestClassifier(
+        n_estimators=200,
+        random_state=42
+    )
+
+    model.fit(X, y)
+
+    joblib.dump(
+        model,
+        "disease_model.pkl"
+    )
+
+    joblib.dump(
+        encoder,
+        "label_encoder.pkl"
+    )
+
+    return model, encoder
+
+model, encoder = load_model()
 
 # ==========================================
 # LOAD DATA
@@ -75,37 +124,6 @@ medical_data = {
         "doctor":"General Physician"
 
     },
-
-    "diabetes":{
-
-        "symptoms":[
-            "Frequent urination",
-            "Excessive thirst",
-            "Blurred vision",
-            "Weight loss"
-        ],
-
-        "causes":[
-            "High blood sugar",
-            "Insulin resistance"
-        ],
-
-        "treatment":[
-            "Healthy diet",
-            "Exercise",
-            "Medicines prescribed by doctor"
-        ],
-
-        "prevention":[
-            "Exercise",
-            "Healthy food",
-            "Maintain weight"
-        ],
-
-        "doctor":"Endocrinologist"
-
-    },
-
     "flu": {
         "symptoms": [
             "High fever",
@@ -285,6 +303,33 @@ medical_data = {
             "Control blood pressure"
         ],
         "doctor": "Cardiologist"
+    },
+
+    "diabetes": {
+        "symptoms": [
+            "Frequent urination",
+            "Excessive thirst",
+            "Blurred vision",
+            "Weight loss",
+            "Fatigue"
+        ],
+        "causes": [
+            "Insulin deficiency",
+            "Insulin resistance",
+            "Genetic factors"
+        ],
+        "treatment": [
+            "Monitor blood sugar",
+            "Exercise regularly",
+            "Follow a healthy diet",
+            "Take prescribed medicines"
+        ],
+        "prevention": [
+            "Maintain healthy weight",
+            "Exercise daily",
+            "Reduce sugar intake"
+        ],
+        "doctor": "Endocrinologist"
     },
 
     "hypertension": {
@@ -633,7 +678,9 @@ st.markdown("""
     border-radius:10px;
     text-align:center;
 }
-</style>""")
+
+</style>
+""", unsafe_allow_html=True)
 
 # ==========================================
 # SIDEBAR
@@ -675,7 +722,7 @@ if menu == "🏠 Home":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.info("🤖AI Health Chatbot")
+        st.info("🤖 AI Health Chatbot")
 
     with col2:
         st.success("⚖ BMI Calculator")
@@ -1051,9 +1098,9 @@ Try asking:
 # ABOUT PAGE
 # ==========================================
 
-elif menu == "ℹ About":
+elif menu == "About":
 
-    st.title("ℹ About MediAssist AI")
+    st.title("About MediAssist AI")
 
     st.markdown("""
 # 🏥 MediAssist AI
@@ -1063,13 +1110,12 @@ An AI-powered healthcare assistant developed using:
 - Streamlit
 - Python
 - Machine Learning
+- Random Forest Classifier
 - EasyOCR
 - Pandas
 - NumPy
 
 ## Features
-
-✅ Disease Prediction
 
 ✅ BMI Calculator
 
@@ -1095,5 +1141,3 @@ st.caption(
     "Educational Project | "
     "Not a substitute for professional medical advice."
 )
-
-
