@@ -72,6 +72,42 @@ def load_model():
 
 model, encoder = load_model()
 
+    # ---------------------------------
+    # Train model automatically
+    # ---------------------------------
+
+    df = pd.read_csv("disease_dataset.csv")
+
+    X = df.drop("Disease", axis=1)
+
+    y = df["Disease"]
+
+    encoder = LabelEncoder()
+
+    y = encoder.fit_transform(y)
+
+    model = RandomForestClassifier(
+        n_estimators=200,
+        random_state=42
+    )
+
+    model.fit(X, y)
+
+    joblib.dump(
+        model,
+        "disease_model.pkl"
+    )
+
+    joblib.dump(
+        encoder,
+        "label_encoder.pkl"
+    )
+
+    return model, encoder
+
+
+model, encoder = load_model()
+
 # ==========================================
 # LOAD DATA
 # ==========================================
@@ -83,7 +119,531 @@ def load_medicine_data():
     except Exception:
         return pd.DataFrame()
 
+
 medicine_df = load_medicine_data()
+
+# ==========================================
+# HEALTH KNOWLEDGE BASE (used by chatbot)
+# ==========================================
+
+medical_data = {
+
+    "flu": {
+        "symptoms": [
+            "High fever",
+            "Cough",
+            "Body pain",
+            "Fatigue",
+            "Headache",
+            "Chills"
+        ],
+        "causes": [
+            "Influenza virus"
+        ],
+        "treatment": [
+            "Take adequate rest",
+            "Drink plenty of fluids",
+            "Take medicines prescribed by your doctor"
+        ],
+        "prevention": [
+            "Wash hands frequently",
+            "Cover mouth while coughing",
+            "Annual flu vaccination"
+        ],
+        "doctor": "General Physician"
+    },
+
+    "common cold": {
+        "symptoms": [
+            "Runny nose",
+            "Sneezing",
+            "Sore throat",
+            "Cough",
+            "Headache"
+        ],
+        "causes": [
+            "Rhinovirus infection"
+        ],
+        "treatment": [
+            "Drink warm fluids",
+            "Take rest",
+            "Steam inhalation"
+        ],
+        "prevention": [
+            "Wash hands",
+            "Avoid close contact with infected people"
+        ],
+        "doctor": "General Physician"
+    },
+
+    "covid-19": {
+        "symptoms": [
+            "Fever",
+            "Cough",
+            "Loss of smell",
+            "Loss of taste",
+            "Shortness of breath",
+            "Fatigue"
+        ],
+        "causes": [
+            "SARS-CoV-2 virus"
+        ],
+        "treatment": [
+            "Rest",
+            "Drink fluids",
+            "Consult doctor if symptoms worsen"
+        ],
+        "prevention": [
+            "Wear a mask",
+            "Wash hands",
+            "Maintain social distancing"
+        ],
+        "doctor": "General Physician"
+    },
+
+    "typhoid": {
+        "symptoms": [
+            "High fever",
+            "Headache",
+            "Abdominal pain",
+            "Weakness",
+            "Loss of appetite"
+        ],
+        "causes": [
+            "Salmonella Typhi bacteria"
+        ],
+        "treatment": [
+            "Complete antibiotic course",
+            "Drink clean water",
+            "Eat soft foods"
+        ],
+        "prevention": [
+            "Drink boiled water",
+            "Eat hygienic food"
+        ],
+        "doctor": "General Physician"
+    },
+
+    "migraine": {
+        "symptoms": [
+            "Severe headache",
+            "Nausea",
+            "Vomiting",
+            "Sensitivity to light",
+            "Blurred vision"
+        ],
+        "causes": [
+            "Stress",
+            "Hormonal changes",
+            "Lack of sleep"
+        ],
+        "treatment": [
+            "Rest in a dark room",
+            "Take prescribed medicine",
+            "Stay hydrated"
+        ],
+        "prevention": [
+            "Sleep well",
+            "Avoid stress",
+            "Avoid trigger foods"
+        ],
+        "doctor": "Neurologist"
+    },
+
+    "food poisoning": {
+        "symptoms": [
+            "Nausea",
+            "Vomiting",
+            "Diarrhea",
+            "Abdominal pain",
+            "Fever",
+            "Dehydration"
+        ],
+        "causes": [
+            "Contaminated food",
+            "Bacteria",
+            "Viruses",
+            "Food toxins"
+        ],
+        "treatment": [
+            "Drink ORS",
+            "Stay hydrated",
+            "Eat light foods",
+            "Consult a doctor if symptoms are severe"
+        ],
+        "prevention": [
+            "Eat freshly cooked food",
+            "Wash hands before eating",
+            "Store food properly"
+        ],
+        "doctor": "General Physician"
+    },
+
+    "heart disease": {
+        "symptoms": [
+            "Chest pain",
+            "Shortness of breath",
+            "Fatigue",
+            "Palpitations",
+            "Dizziness"
+        ],
+        "causes": [
+            "High cholesterol",
+            "High blood pressure",
+            "Smoking",
+            "Diabetes",
+            "Obesity"
+        ],
+        "treatment": [
+            "Take prescribed medicines",
+            "Maintain a healthy diet",
+            "Exercise regularly",
+            "Regular medical checkups"
+        ],
+        "prevention": [
+            "Avoid smoking",
+            "Exercise daily",
+            "Eat a heart-healthy diet",
+            "Control blood pressure"
+        ],
+        "doctor": "Cardiologist"
+    },
+
+    "diabetes": {
+        "symptoms": [
+            "Frequent urination",
+            "Excessive thirst",
+            "Blurred vision",
+            "Weight loss",
+            "Fatigue"
+        ],
+        "causes": [
+            "Insulin deficiency",
+            "Insulin resistance",
+            "Genetic factors"
+        ],
+        "treatment": [
+            "Monitor blood sugar",
+            "Exercise regularly",
+            "Follow a healthy diet",
+            "Take prescribed medicines"
+        ],
+        "prevention": [
+            "Maintain healthy weight",
+            "Exercise daily",
+            "Reduce sugar intake"
+        ],
+        "doctor": "Endocrinologist"
+    },
+
+    "hypertension": {
+        "symptoms": [
+            "Headache",
+            "Dizziness",
+            "Chest pain",
+            "Blurred vision",
+            "Fatigue"
+        ],
+        "causes": [
+            "High salt intake",
+            "Stress",
+            "Obesity",
+            "Family history"
+        ],
+        "treatment": [
+            "Take blood pressure medicines",
+            "Reduce salt intake",
+            "Exercise regularly"
+        ],
+        "prevention": [
+            "Eat healthy foods",
+            "Reduce stress",
+            "Maintain healthy weight"
+        ],
+        "doctor": "Cardiologist"
+    },
+
+    "asthma": {
+        "symptoms": [
+            "Wheezing",
+            "Shortness of breath",
+            "Cough",
+            "Chest tightness"
+        ],
+        "causes": [
+            "Allergies",
+            "Dust",
+            "Cold air",
+            "Respiratory infections"
+        ],
+        "treatment": [
+            "Use inhaler",
+            "Take prescribed medicines",
+            "Avoid triggers"
+        ],
+        "prevention": [
+            "Avoid dust",
+            "Do not smoke",
+            "Carry inhaler"
+        ],
+        "doctor": "Pulmonologist"
+    },
+
+    "allergy": {
+        "symptoms": [
+            "Skin rash",
+            "Itching",
+            "Sneezing",
+            "Runny nose",
+            "Watery eyes"
+        ],
+        "causes": [
+            "Dust",
+            "Pollen",
+            "Pet dander",
+            "Certain foods",
+            "Medicines"
+        ],
+        "treatment": [
+            "Take antihistamines",
+            "Avoid allergens",
+            "Consult a doctor if symptoms worsen"
+        ],
+        "prevention": [
+            "Keep surroundings clean",
+            "Avoid known allergens",
+            "Wear a mask in dusty areas"
+        ],
+        "doctor": "Dermatologist / Allergist"
+    },
+
+    "arthritis": {
+        "symptoms": [
+            "Joint pain",
+            "Joint stiffness",
+            "Swelling",
+            "Reduced movement"
+        ],
+        "causes": [
+            "Age",
+            "Joint wear and tear",
+            "Autoimmune disorders"
+        ],
+        "treatment": [
+            "Exercise regularly",
+            "Pain relief medicines",
+            "Physiotherapy"
+        ],
+        "prevention": [
+            "Maintain healthy weight",
+            "Exercise daily",
+            "Avoid joint injuries"
+        ],
+        "doctor": "Orthopedic Specialist"
+    },
+
+    "depression": {
+        "symptoms": [
+            "Persistent sadness",
+            "Loss of interest",
+            "Fatigue",
+            "Sleep problems",
+            "Difficulty concentrating"
+        ],
+        "causes": [
+            "Stress",
+            "Genetics",
+            "Chemical imbalance",
+            "Life events"
+        ],
+        "treatment": [
+            "Counselling",
+            "Psychotherapy",
+            "Medicines prescribed by psychiatrist"
+        ],
+        "prevention": [
+            "Exercise regularly",
+            "Maintain social connections",
+            "Seek help early"
+        ],
+        "doctor": "Psychiatrist"
+    },
+
+    "anxiety disorder": {
+        "symptoms": [
+            "Excessive worry",
+            "Restlessness",
+            "Fast heartbeat",
+            "Sweating",
+            "Difficulty sleeping"
+        ],
+        "causes": [
+            "Stress",
+            "Genetics",
+            "Traumatic experiences"
+        ],
+        "treatment": [
+            "Counselling",
+            "Breathing exercises",
+            "Medicines if prescribed"
+        ],
+        "prevention": [
+            "Meditation",
+            "Regular exercise",
+            "Adequate sleep"
+        ],
+        "doctor": "Psychologist / Psychiatrist"
+    },
+
+    "gerd": {
+        "symptoms": [
+            "Heartburn",
+            "Acid reflux",
+            "Chest discomfort",
+            "Difficulty swallowing"
+        ],
+        "causes": [
+            "Weak lower esophageal sphincter",
+            "Obesity",
+            "Spicy foods",
+            "Large meals"
+        ],
+        "treatment": [
+            "Take antacids or prescribed medicines",
+            "Avoid spicy foods",
+            "Eat smaller meals"
+        ],
+        "prevention": [
+            "Maintain healthy weight",
+            "Avoid lying down after meals",
+            "Reduce caffeine intake"
+        ],
+        "doctor": "Gastroenterologist"
+    },
+
+    "constipation": {
+        "symptoms": [
+            "Infrequent bowel movements",
+            "Hard stools",
+            "Abdominal discomfort",
+            "Bloating"
+        ],
+        "causes": [
+            "Low fiber diet",
+            "Not drinking enough water",
+            "Lack of exercise"
+        ],
+        "treatment": [
+            "Drink more water",
+            "Eat fiber-rich foods",
+            "Exercise regularly"
+        ],
+        "prevention": [
+            "Eat fruits and vegetables",
+            "Drink 2-3 litres of water daily",
+            "Stay physically active"
+        ],
+        "doctor": "Gastroenterologist"
+    },
+
+    "ear infection": {
+        "symptoms": [
+            "Ear pain",
+            "Difficulty hearing",
+            "Fever",
+            "Fluid discharge from ear"
+        ],
+        "causes": [
+            "Bacterial infection",
+            "Viral infection"
+        ],
+        "treatment": [
+            "Take prescribed antibiotics",
+            "Keep ear dry",
+            "Consult an ENT specialist"
+        ],
+        "prevention": [
+            "Maintain ear hygiene",
+            "Avoid inserting objects into the ear"
+        ],
+        "doctor": "ENT Specialist"
+    },
+
+    "conjunctivitis": {
+        "symptoms": [
+            "Red eyes",
+            "Itchy eyes",
+            "Watery eyes",
+            "Eye discharge"
+        ],
+        "causes": [
+            "Virus",
+            "Bacteria",
+            "Allergy"
+        ],
+        "treatment": [
+            "Use prescribed eye drops",
+            "Keep eyes clean",
+            "Avoid touching eyes"
+        ],
+        "prevention": [
+            "Wash hands frequently",
+            "Do not share towels",
+            "Avoid rubbing eyes"
+        ],
+        "doctor": "Ophthalmologist"
+    },
+
+    "back strain": {
+        "symptoms": [
+            "Back pain",
+            "Muscle stiffness",
+            "Difficulty bending",
+            "Muscle spasms"
+        ],
+        "causes": [
+            "Heavy lifting",
+            "Poor posture",
+            "Sudden movements"
+        ],
+        "treatment": [
+            "Take rest",
+            "Apply ice or heat",
+            "Pain relief medicines if prescribed"
+        ],
+        "prevention": [
+            "Maintain proper posture",
+            "Exercise regularly",
+            "Lift heavy objects correctly"
+        ],
+        "doctor": "Orthopedic Specialist"
+    },
+
+    "dengue": {
+        "symptoms": [
+            "High fever",
+            "Severe headache",
+            "Body pain",
+            "Joint pain",
+            "Skin rash",
+            "Nausea"
+        ],
+        "causes": [
+            "Dengue virus spread by Aedes mosquitoes"
+        ],
+        "treatment": [
+            "Drink plenty of fluids",
+            "Take adequate rest",
+            "Consult a doctor immediately"
+        ],
+        "prevention": [
+            "Use mosquito nets",
+            "Remove stagnant water",
+            "Use mosquito repellent"
+        ],
+        "doctor": "General Physician"
+    }
+}
 
 # ==========================================
 # CUSTOM CSS
@@ -215,8 +775,6 @@ if menu == "🏠 Home":
     - AI Healthcare Chatbot
     - Health Recommendations
     """)
-
-    
 
 # ==========================================
 # PATIENT DETAILS
@@ -828,642 +1386,7 @@ elif menu == "❤️ Health Tips":
 
     for tip in tips:
         st.success("✅ " + tip)
-medical_data = {
 
-"flu":{
-
-"symptoms":[
-"High fever",
-"Cough",
-"Body pain",
-"Fatigue",
-"Headache",
-"Chills"
-],
-
-"causes":[
-"Influenza virus"
-],
-
-"treatment":[
-"Take adequate rest",
-"Drink plenty of fluids",
-"Take medicines prescribed by your doctor"
-],
-
-"prevention":[
-"Wash hands frequently",
-"Cover mouth while coughing",
-"Annual flu vaccination"
-],
-
-"doctor":"General Physician"
-
-},
-
-"common cold":{
-
-"symptoms":[
-"Runny nose",
-"Sneezing",
-"Sore throat",
-"Cough",
-"Headache"
-],
-
-"causes":[
-"Rhinovirus infection"
-],
-
-"treatment":[
-"Drink warm fluids",
-"Take rest",
-"Steam inhalation"
-],
-
-"prevention":[
-"Wash hands",
-"Avoid close contact with infected people"
-],
-
-"doctor":"General Physician"
-
-},
-
-"covid-19":{
-
-"symptoms":[
-"Fever",
-"Cough",
-"Loss of smell",
-"Loss of taste",
-"Shortness of breath",
-"Fatigue"
-],
-
-"causes":[
-"SARS-CoV-2 virus"
-],
-
-"treatment":[
-"Rest",
-"Drink fluids",
-"Consult doctor if symptoms worsen"
-],
-
-"prevention":[
-"Wear a mask",
-"Wash hands",
-"Maintain social distancing"
-],
-
-"doctor":"General Physician"
-
-},
-
-"typhoid":{
-
-"symptoms":[
-"High fever",
-"Headache",
-"Abdominal pain",
-"Weakness",
-"Loss of appetite"
-],
-
-"causes":[
-"Salmonella Typhi bacteria"
-],
-
-"treatment":[
-"Complete antibiotic course",
-"Drink clean water",
-"Eat soft foods"
-],
-
-"prevention":[
-"Drink boiled water",
-"Eat hygienic food"
-],
-
-"doctor":"General Physician"
-
-},
-
-"migraine":{
-
-"symptoms":[
-"Severe headache",
-"Nausea",
-"Vomiting",
-"Sensitivity to light",
-"Blurred vision"
-],
-
-"causes":[
-"Stress",
-"Hormonal changes",
-"Lack of sleep"
-],
-
-"treatment":[
-"Rest in a dark room",
-"Take prescribed medicine",
-"Stay hydrated"
-],
-
-"prevention":[
-"Sleep well",
-"Avoid stress",
-"Avoid trigger foods"
-],
-
-"doctor":"Neurologist"
-
-},
-"food poisoning":{
-
-"symptoms":[
-"Nausea",
-"Vomiting",
-"Diarrhea",
-"Abdominal pain",
-"Fever",
-"Dehydration"
-],
-
-"causes":[
-"Contaminated food",
-"Bacteria",
-"Viruses",
-"Food toxins"
-],
-
-"treatment":[
-"Drink ORS",
-"Stay hydrated",
-"Eat light foods",
-"Consult a doctor if symptoms are severe"
-],
-
-"prevention":[
-"Eat freshly cooked food",
-"Wash hands before eating",
-"Store food properly"
-],
-
-"doctor":"General Physician"
-
-},
-
-"heart disease":{
-
-"symptoms":[
-"Chest pain",
-"Shortness of breath",
-"Fatigue",
-"Palpitations",
-"Dizziness"
-],
-
-"causes":[
-"High cholesterol",
-"High blood pressure",
-"Smoking",
-"Diabetes",
-"Obesity"
-],
-
-"treatment":[
-"Take prescribed medicines",
-"Maintain a healthy diet",
-"Exercise regularly",
-"Regular medical checkups"
-],
-
-"prevention":[
-"Avoid smoking",
-"Exercise daily",
-"Eat a heart-healthy diet",
-"Control blood pressure"
-],
-
-"doctor":"Cardiologist"
-
-},
-
-"diabetes":{
-
-"symptoms":[
-"Frequent urination",
-"Excessive thirst",
-"Blurred vision",
-"Weight loss",
-"Fatigue"
-],
-
-"causes":[
-"Insulin deficiency",
-"Insulin resistance",
-"Genetic factors"
-],
-
-"treatment":[
-"Monitor blood sugar",
-"Exercise regularly",
-"Follow a healthy diet",
-"Take prescribed medicines"
-],
-
-"prevention":[
-"Maintain healthy weight",
-"Exercise daily",
-"Reduce sugar intake"
-],
-
-"doctor":"Endocrinologist"
-
-},
-
-"hypertension":{
-
-"symptoms":[
-"Headache",
-"Dizziness",
-"Chest pain",
-"Blurred vision",
-"Fatigue"
-],
-
-"causes":[
-"High salt intake",
-"Stress",
-"Obesity",
-"Family history"
-],
-
-"treatment":[
-"Take blood pressure medicines",
-"Reduce salt intake",
-"Exercise regularly"
-],
-
-"prevention":[
-"Eat healthy foods",
-"Reduce stress",
-"Maintain healthy weight"
-],
-
-"doctor":"Cardiologist"
-
-},
-
-"asthma":{
-
-"symptoms":[
-"Wheezing",
-"Shortness of breath",
-"Cough",
-"Chest tightness"
-],
-
-"causes":[
-"Allergies",
-"Dust",
-"Cold air",
-"Respiratory infections"
-],
-
-"treatment":[
-"Use inhaler",
-"Take prescribed medicines",
-"Avoid triggers"
-],
-
-"prevention":[
-"Avoid dust",
-"Do not smoke",
-"Carry inhaler"
-],
-
-"doctor":"Pulmonologist"
-
-},
-"allergy":{
-
-"symptoms":[
-"Skin rash",
-"Itching",
-"Sneezing",
-"Runny nose",
-"Watery eyes"
-],
-
-"causes":[
-"Dust",
-"Pollen",
-"Pet dander",
-"Certain foods",
-"Medicines"
-],
-
-"treatment":[
-"Take antihistamines",
-"Avoid allergens",
-"Consult a doctor if symptoms worsen"
-],
-
-"prevention":[
-"Keep surroundings clean",
-"Avoid known allergens",
-"Wear a mask in dusty areas"
-],
-
-"doctor":"Dermatologist / Allergist"
-
-},
-
-"arthritis":{
-
-"symptoms":[
-"Joint pain",
-"Joint stiffness",
-"Swelling",
-"Reduced movement"
-],
-
-"causes":[
-"Age",
-"Joint wear and tear",
-"Autoimmune disorders"
-],
-
-"treatment":[
-"Exercise regularly",
-"Pain relief medicines",
-"Physiotherapy"
-],
-
-"prevention":[
-"Maintain healthy weight",
-"Exercise daily",
-"Avoid joint injuries"
-],
-
-"doctor":"Orthopedic Specialist"
-
-},
-
-"depression":{
-
-"symptoms":[
-"Persistent sadness",
-"Loss of interest",
-"Fatigue",
-"Sleep problems",
-"Difficulty concentrating"
-],
-
-"causes":[
-"Stress",
-"Genetics",
-"Chemical imbalance",
-"Life events"
-],
-
-"treatment":[
-"Counselling",
-"Psychotherapy",
-"Medicines prescribed by psychiatrist"
-],
-
-"prevention":[
-"Exercise regularly",
-"Maintain social connections",
-"Seek help early"
-],
-
-"doctor":"Psychiatrist"
-
-},
-
-"anxiety disorder":{
-
-"symptoms":[
-"Excessive worry",
-"Restlessness",
-"Fast heartbeat",
-"Sweating",
-"Difficulty sleeping"
-],
-
-"causes":[
-"Stress",
-"Genetics",
-"Traumatic experiences"
-],
-
-"treatment":[
-"Counselling",
-"Breathing exercises",
-"Medicines if prescribed"
-],
-
-"prevention":[
-"Meditation",
-"Regular exercise",
-"Adequate sleep"
-],
-
-"doctor":"Psychologist / Psychiatrist"
-
-},
-
-"gerd":{
-
-"symptoms":[
-"Heartburn",
-"Acid reflux",
-"Chest discomfort",
-"Difficulty swallowing"
-],
-
-"causes":[
-"Weak lower esophageal sphincter",
-"Obesity",
-"Spicy foods",
-"Large meals"
-],
-
-"treatment":[
-"Take antacids or prescribed medicines",
-"Avoid spicy foods",
-"Eat smaller meals"
-],
-
-"prevention":[
-"Maintain healthy weight",
-"Avoid lying down after meals",
-"Reduce caffeine intake"
-],
-
-"doctor":"Gastroenterologist"
-
-},
-"constipation":{
-
-"symptoms":[
-"Infrequent bowel movements",
-"Hard stools",
-"Abdominal discomfort",
-"Bloating"
-],
-
-"causes":[
-"Low fiber diet",
-"Not drinking enough water",
-"Lack of exercise"
-],
-
-"treatment":[
-"Drink more water",
-"Eat fiber-rich foods",
-"Exercise regularly"
-],
-
-"prevention":[
-"Eat fruits and vegetables",
-"Drink 2-3 litres of water daily",
-"Stay physically active"
-],
-
-"doctor":"Gastroenterologist"
-
-},
-
-"ear infection":{
-
-"symptoms":[
-"Ear pain",
-"Difficulty hearing",
-"Fever",
-"Fluid discharge from ear"
-],
-
-"causes":[
-"Bacterial infection",
-"Viral infection"
-],
-
-"treatment":[
-"Take prescribed antibiotics",
-"Keep ear dry",
-"Consult an ENT specialist"
-],
-
-"prevention":[
-"Maintain ear hygiene",
-"Avoid inserting objects into the ear"
-],
-
-"doctor":"ENT Specialist"
-
-},
-
-"conjunctivitis":{
-
-"symptoms":[
-"Red eyes",
-"Itchy eyes",
-"Watery eyes",
-"Eye discharge"
-],
-
-"causes":[
-"Virus",
-"Bacteria",
-"Allergy"
-],
-
-"treatment":[
-"Use prescribed eye drops",
-"Keep eyes clean",
-"Avoid touching eyes"
-],
-
-"prevention":[
-"Wash hands frequently",
-"Do not share towels",
-"Avoid rubbing eyes"
-],
-
-"doctor":"Ophthalmologist"
-
-},
-
-"back strain":{
-
-"symptoms":[
-"Back pain",
-"Muscle stiffness",
-"Difficulty bending",
-"Muscle spasms"
-],
-
-"causes":[
-"Heavy lifting",
-"Poor posture",
-"Sudden movements"
-],
-
-"treatment":[
-"Take rest",
-"Apply ice or heat",
-"Pain relief medicines if prescribed"
-],
-
-"prevention":[
-"Maintain proper posture",
-"Exercise regularly",
-"Lift heavy objects correctly"
-],
-
-"doctor":"Orthopedic Specialist"
-
-},
-
-"dengue":{
-
-"symptoms":[
-"High fever",
-"Severe headache",
-"Body pain",
-"Joint pain",
-"Skin rash",
-"Nausea"
-],
-
-"causes":[
-"Dengue virus spread by Aedes mosquitoes"
-],
-
-"treatment":[
-"Drink plenty of fluids",
-"Take adequate rest",
-"Consult a doctor immediately"
-],
-
-"prevention":[
-"Use mosquito nets",
-"Remove stagnant water",
-"Use mosquito repellent"
-],
-
-"doctor":"General Physician"
-
-}
-
-}
 # ==========================================
 # AI HEALTH CHATBOT
 # ==========================================
@@ -1588,8 +1511,6 @@ Try asking:
 
 • Uses of Paracetamol
 """)
-
-st.success(answer)
 
 # ==========================================
 # ABOUT PAGE
