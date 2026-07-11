@@ -632,19 +632,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# SESSION STATE
-# ==========================================
-
-if "patient_name" not in st.session_state:
-    st.session_state.patient_name = ""
-
-if "patient_age" not in st.session_state:
-    st.session_state.patient_age = 18
-
-if "patient_gender" not in st.session_state:
-    st.session_state.patient_gender = "Male"
-
-# ==========================================
 # SIDEBAR
 # ==========================================
 
@@ -706,7 +693,7 @@ if menu == "🏠 Home":
 
     st.divider()
     st.markdown("""
-### ### 🚀 Features
+### 🚀 Features
 
 ✅ BMI Calculator
 
