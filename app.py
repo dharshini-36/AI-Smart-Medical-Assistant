@@ -788,9 +788,6 @@ if menu == "🏠 Home":
         st.warning("🤖 AI Health Chatbot")
 
     st.divider()
-
-    st.subheader("✨ Features")
-
     st.markdown("""
 ### 🚀 Features
 
