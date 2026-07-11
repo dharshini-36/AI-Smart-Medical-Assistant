@@ -19,6 +19,9 @@ st.set_page_config(
     layout="wide"
 )
 
+# ==========================================
+# LOAD MODEL
+# ==========================================
 
 # ==========================================
 # LOAD DATA
@@ -70,6 +73,36 @@ medical_data = {
         ],
 
         "doctor":"General Physician"
+
+    },
+
+    "diabetes":{
+
+        "symptoms":[
+            "Frequent urination",
+            "Excessive thirst",
+            "Blurred vision",
+            "Weight loss"
+        ],
+
+        "causes":[
+            "High blood sugar",
+            "Insulin resistance"
+        ],
+
+        "treatment":[
+            "Healthy diet",
+            "Exercise",
+            "Medicines prescribed by doctor"
+        ],
+
+        "prevention":[
+            "Exercise",
+            "Healthy food",
+            "Maintain weight"
+        ],
+
+        "doctor":"Endocrinologist"
 
     },
 
@@ -252,33 +285,6 @@ medical_data = {
             "Control blood pressure"
         ],
         "doctor": "Cardiologist"
-    },
-
-    "diabetes": {
-        "symptoms": [
-            "Frequent urination",
-            "Excessive thirst",
-            "Blurred vision",
-            "Weight loss",
-            "Fatigue"
-        ],
-        "causes": [
-            "Insulin deficiency",
-            "Insulin resistance",
-            "Genetic factors"
-        ],
-        "treatment": [
-            "Monitor blood sugar",
-            "Exercise regularly",
-            "Follow a healthy diet",
-            "Take prescribed medicines"
-        ],
-        "prevention": [
-            "Maintain healthy weight",
-            "Exercise daily",
-            "Reduce sugar intake"
-        ],
-        "doctor": "Endocrinologist"
     },
 
     "hypertension": {
@@ -628,8 +634,6 @@ st.markdown("""
     text-align:center;
 }
 
-</style>
-""", unsafe_allow_html=True)
 
 # ==========================================
 # SIDEBAR
@@ -646,7 +650,7 @@ menu = st.sidebar.radio(
         "📄 Prescription Reader",
         "❤️ Health Tips",
         "🤖 Health Chatbot",
-        "About"
+        "ℹ About"
     ]
 )
 
@@ -655,6 +659,7 @@ menu = st.sidebar.radio(
 # ==========================================
 
 if menu == "🏠 Home":
+
     st.markdown(
         "<div class='title'>🏥 MediAssist AI</div>",
         unsafe_allow_html=True
@@ -670,7 +675,7 @@ if menu == "🏠 Home":
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.info("🤖 Medicine Search")
+        st.info("🤖AI Health Chatbot")
 
     with col2:
         st.success("⚖ BMI Calculator")
@@ -692,6 +697,9 @@ if menu == "🏠 Home":
         st.warning("🤖 AI Health Chatbot")
 
     st.divider()
+
+    st.subheader("✨ Features")
+
     st.markdown("""
 ### 🚀 Features
 
@@ -704,6 +712,7 @@ if menu == "🏠 Home":
 ✅ Daily Health Tips
 
 ✅ AI Healthcare Chatbot
+
 """)
 
 # ==========================================
@@ -840,7 +849,9 @@ elif menu == "💊 Medicine Search":
 # ==========================================
 
 elif menu == "📄 Prescription Reader":
+
     import easyocr
+
     st.title("📄 AI Prescription Reader")
 
     uploaded_file = st.file_uploader(
@@ -862,7 +873,7 @@ elif menu == "📄 Prescription Reader":
 
             with st.spinner("Reading Prescription..."):
 
-                reader = easyocr.Reader(['en'],gpu=False)
+                reader = easyocr.Reader(['en'])
 
                 result = reader.readtext(
                     np.array(image)
@@ -1040,7 +1051,7 @@ Try asking:
 # ABOUT PAGE
 # ==========================================
 
-elif menu == "About":
+elif menu == "ℹ About":
 
     st.title("ℹ About MediAssist AI")
 
@@ -1049,25 +1060,24 @@ elif menu == "About":
 
 An AI-powered healthcare assistant developed using:
 
-- Python
 - Streamlit
+- Python
+- Machine Learning
+- EasyOCR
 - Pandas
 - NumPy
-- EasyOCR
-- Pillow
-- OpenCV
 
 ## Features
 
+✅ Disease Prediction
+
 ✅ BMI Calculator
 
-✅ Medicine Information Search
+✅ Medicine Information
 
-✅ Prescription Reader (OCR)
+✅ Prescription OCR
 
-✅ Health Tips
-
-✅ AI Health Chatbot
+✅ Health Chatbot
 
 ## Developer
 
@@ -1076,10 +1086,14 @@ Developed by:
 **Dharshini Natarajan**
 
 B.Sc Computer Science with Artificial Intelligence
+
 """)
+st.markdown("---")
 
-    st.markdown("---")
+st.caption(
+    "© 2026 MediAssist AI | "
+    "Educational Project | "
+    "Not a substitute for professional medical advice."
+)
 
-    st.caption(
-        "© 2026 MediAssist AI | Educational Project | Not a substitute for professional medical advice."
-    )
+
