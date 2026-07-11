@@ -19,8 +19,7 @@ from sklearn.preprocessing import LabelEncoder
 st.set_page_config(
     page_title="MediAssist AI",
     page_icon="🏥",
-    layout="wide"version
-    
+    layout="wide"
 )
 
 # ==========================================
@@ -1270,7 +1269,7 @@ B.Sc Computer Science with Artificial Intelligence
 # ==========================================
 # FOOTER
 # ==========================================
-"""),
+""")
 st.markdown("---")
 
 st.caption(
