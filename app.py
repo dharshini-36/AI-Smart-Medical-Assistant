@@ -11,7 +11,6 @@ import os
 from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-image = Image.open(uploaded_file)
 
 # ==========================================
 # PAGE CONFIG
@@ -864,7 +863,6 @@ elif menu == "📄 Prescription Reader":
     if uploaded_file:
 
         image = Image.open(uploaded_file)
-
         st.image(image, use_container_width=True)
 
         if st.button("Extract Prescription"):
