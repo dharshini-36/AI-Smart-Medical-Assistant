@@ -870,9 +870,9 @@ elif menu == "📄 Prescription Reader":
 
         if st.button("Extract Prescription"):
 
-            with st.spinner("Analyzing Prescription..."):
+    with st.spinner("Analyzing Prescription..."):
 
-                prompt = """
+        prompt = """
 You are a medical OCR assistant.
 
 Read this prescription carefully.
@@ -902,25 +902,27 @@ If something is unreadable write 'Unclear'.
 Do not guess.
 """
 
-                try:
-                    response = client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=[
+        try:
+
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=[
                     prompt,
                     image
-                    ]
-                    )
+                ]
+            )
 
-                st.subheader("Extracted Prescription")
-                st.write(response.text)
-                except Exception as e:
-                st.error(str(e))
+            st.subheader("Extracted Prescription")
+            st.write(response.text)
 
-                st.download_button(
-                    "Download",
-                    response.text,
-                    "prescription.txt"
-                )
+            st.download_button(
+                "Download",
+                response.text,
+                file_name="prescription.txt"
+            )
+
+        except Exception as e:
+            st.error(f"Gemini Error:\n{e}")
 # ==========================================
 # HEALTH TIPS
 # ==========================================
