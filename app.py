@@ -831,7 +831,7 @@ elif menu == "💊 Medicine Search":
                 st.success(medicine["Dosage"])
 
                 st.write("### Side Effects")
-                st.warning(medicine["Side Effects"])
+                st.warning(medicine["SideEffects"])
 
                 st.write("### Warnings")
                 st.error(medicine["Warnings"])
