@@ -899,14 +899,17 @@ Do not guess.
 """
 
                 try:
-        
+                    image_bytes = uploaded_file.getvalue()
                     response = client.models.generate_content(
                         model="gemini-2.5-flash-lite",
-                        contents=[prompt, image]
+                        contents=[
+                            prompt,
+                            {
+                                "mime_type": uploaded_file.type,
+                                "data": image_bytes,
+                            },
+                        ],
                     )
-                    
-                    print(response.text)
-
         
                     st.subheader("Extracted Prescription")
                     st.write(response.text)
