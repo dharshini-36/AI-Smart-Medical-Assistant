@@ -8,11 +8,12 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import os
-import google.generativeai as genai
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+from google import genai
 
-model = genai.GenerativeModel("gemini-1.5-pro")
+client = genai.Client(
+    api_key=st.secrets["GEMINI_API_KEY"]
+)
 
 # ==========================================
 # PAGE CONFIG
