@@ -40,7 +40,7 @@ def load_medicine_data():
 
 
 medicine_df = load_medicine_data()
-
+st.write(medicine_df.columns.tolist())
 # ==========================================
 # HEALTH KNOWLEDGE BASE (used by chatbot)
 # ==========================================
