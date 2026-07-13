@@ -20,56 +20,6 @@ st.set_page_config(
 )
 
 # ==========================================
-# LOAD MODEL
-# ==========================================
-
-@st.cache_resource
-def load_model():
-
-    # If model files already exist, load them
-    if os.path.exists("disease_model.pkl") and os.path.exists("label_encoder.pkl"):
-
-        model = joblib.load("disease_model.pkl")
-        encoder = joblib.load("label_encoder.pkl")
-
-        return model, encoder
-
-    # ---------------------------------
-    # Train model automatically
-    # ---------------------------------
-
-    df = pd.read_csv("disease_dataset.csv")
-
-    X = df.drop("Disease", axis=1)
-
-    y = df["Disease"]
-
-    encoder = LabelEncoder()
-
-    y = encoder.fit_transform(y)
-
-    model = RandomForestClassifier(
-        n_estimators=200,
-        random_state=42
-    )
-
-    model.fit(X, y)
-
-    joblib.dump(
-        model,
-        "disease_model.pkl"
-    )
-
-    joblib.dump(
-        encoder,
-        "label_encoder.pkl"
-    )
-
-    return model, encoder
-
-model, encoder = load_model()
-
-# ==========================================
 # LOAD DATA
 # ==========================================
 
