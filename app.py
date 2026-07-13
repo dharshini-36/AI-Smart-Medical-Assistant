@@ -8,6 +8,11 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import os
+import google.generativeai as genai
+
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 # ==========================================
 # PAGE CONFIG
@@ -849,54 +854,69 @@ elif menu == "💊 Medicine Search":
 
 elif menu == "📄 Prescription Reader":
 
-    import easyocr
-
     st.title("📄 AI Prescription Reader")
 
     uploaded_file = st.file_uploader(
-        "Upload Prescription Image",
-        type=["png", "jpg", "jpeg"]
+        "Upload Prescription",
+        type=["png","jpg","jpeg"]
     )
 
-    if uploaded_file is not None:
+    if uploaded_file:
 
         image = Image.open(uploaded_file)
 
-        st.image(
-            image,
-            caption="Uploaded Prescription",
-            use_container_width=True
-        )
+        st.image(image, use_container_width=True)
 
-        if st.button("Read Prescription"):
+        if st.button("Extract Prescription"):
 
-            with st.spinner("Reading Prescription..."):
+            with st.spinner("Analyzing Prescription..."):
 
-                reader = easyocr.Reader(['en'])
+                prompt = """
+You are a medical OCR assistant.
 
-                result = reader.readtext(
-                    np.array(image)
+Read this prescription carefully.
+
+Extract:
+
+Doctor Name
+
+Hospital/Clinic Name
+
+Patient Name
+
+Date
+
+Medicine Name
+
+Dosage
+
+Frequency
+
+Duration
+
+Doctor Instructions
+
+If something is unreadable write 'Unclear'.
+
+Do not guess.
+"""
+
+                response = model.generate_content(
+                    [
+                        prompt,
+                        image
+                    ]
                 )
 
-                extracted_text = ""
+                st.subheader("Extracted Prescription")
 
-                for item in result:
-                    extracted_text += item[1] + "\n"
-
-                st.subheader("Extracted Text")
-
-                st.text_area(
-                    "Result",
-                    extracted_text,
-                    height=250
-                )
+                st.write(response.text)
 
                 st.download_button(
-                    "Download Text",
-                    extracted_text,
-                    file_name="prescription.txt"
+                    "Download",
+                    response.text,
+                    "prescription.txt"
                 )
-
 # ==========================================
 # HEALTH TIPS
 # ==========================================
