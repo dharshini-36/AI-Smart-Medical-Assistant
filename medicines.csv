@@ -1,0 +1,321 @@
+Medicine,Uses,Dosage,Side Effects,Warnings
+Paracetamol,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan,High BP,As prescribed,Dizziness,Monitor BP
+Losartan,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup,Cough,As prescribed,Nausea,Use as directed
+Sinarest,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS,Dehydration,As needed,None,Prepare correctly
+Zincovit,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel,Muscle pain,Apply locally,Skin irritation,External use
+Digene,Acidity,As needed,Constipation,Do not overuse
+Loperamide,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron,Vomiting,As prescribed,Headache,Prescription only
+Domperidone,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 1,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 1,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 1,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 1,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 1,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 1,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 1,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 1,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 1,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 1,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 1,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 1,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 1,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 1,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 1,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 1,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 1,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 1,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 1,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 1,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole 1,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole 1,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine 1,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine 1,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup 1,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup 1,Cough,As prescribed,Nausea,Use as directed
+Sinarest 1,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS 1,Dehydration,As needed,None,Prepare correctly
+Zincovit 1,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte 1,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500 1,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler 1,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort 1,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort 1,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream 1,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole 1,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine 1,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel 1,Muscle pain,Apply locally,Skin irritation,External use
+Digene 1,Acidity,As needed,Constipation,Do not overuse
+Loperamide 1,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron 1,Vomiting,As prescribed,Headache,Prescription only
+Domperidone 1,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole 1,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole 1,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir 1,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline 1,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin 1,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast 1,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm 1,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin 1,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 2,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 2,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 2,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 2,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 2,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 2,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 2,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 2,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 2,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 2,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 2,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 2,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 2,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 2,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 2,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 2,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 2,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 2,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 2,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 2,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole 2,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole 2,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine 2,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine 2,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup 2,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup 2,Cough,As prescribed,Nausea,Use as directed
+Sinarest 2,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS 2,Dehydration,As needed,None,Prepare correctly
+Zincovit 2,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte 2,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500 2,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler 2,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort 2,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort 2,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream 2,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole 2,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine 2,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel 2,Muscle pain,Apply locally,Skin irritation,External use
+Digene 2,Acidity,As needed,Constipation,Do not overuse
+Loperamide 2,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron 2,Vomiting,As prescribed,Headache,Prescription only
+Domperidone 2,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole 2,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole 2,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir 2,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline 2,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin 2,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast 2,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm 2,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin 2,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 3,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 3,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 3,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 3,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 3,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 3,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 3,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 3,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 3,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 3,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 3,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 3,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 3,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 3,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 3,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 3,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 3,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 3,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 3,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 3,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole 3,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole 3,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine 3,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine 3,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup 3,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup 3,Cough,As prescribed,Nausea,Use as directed
+Sinarest 3,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS 3,Dehydration,As needed,None,Prepare correctly
+Zincovit 3,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte 3,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500 3,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler 3,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort 3,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort 3,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream 3,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole 3,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine 3,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel 3,Muscle pain,Apply locally,Skin irritation,External use
+Digene 3,Acidity,As needed,Constipation,Do not overuse
+Loperamide 3,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron 3,Vomiting,As prescribed,Headache,Prescription only
+Domperidone 3,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole 3,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole 3,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir 3,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline 3,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin 3,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast 3,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm 3,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin 3,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 4,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 4,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 4,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 4,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 4,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 4,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 4,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 4,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 4,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 4,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 4,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 4,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 4,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 4,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 4,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 4,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 4,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 4,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 4,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 4,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole 4,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole 4,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine 4,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine 4,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup 4,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup 4,Cough,As prescribed,Nausea,Use as directed
+Sinarest 4,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS 4,Dehydration,As needed,None,Prepare correctly
+Zincovit 4,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte 4,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500 4,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler 4,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort 4,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort 4,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream 4,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole 4,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine 4,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel 4,Muscle pain,Apply locally,Skin irritation,External use
+Digene 4,Acidity,As needed,Constipation,Do not overuse
+Loperamide 4,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron 4,Vomiting,As prescribed,Headache,Prescription only
+Domperidone 4,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole 4,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole 4,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir 4,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline 4,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin 4,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast 4,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm 4,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin 4,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 5,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 5,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 5,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 5,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 5,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 5,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 5,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 5,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 5,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 5,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 5,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 5,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 5,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 5,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 5,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 5,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 5,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 5,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 5,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 5,Acidity,Before breakfast,Headache,Use as directed
+Omeprazole 5,GERD,Before meals,Headache,Long-term only if advised
+Rabeprazole 5,Acidity,Before breakfast,Constipation,Use as directed
+Cetirizine 5,Allergy,Once daily,Drowsiness,Avoid driving
+Levocetirizine 5,Allergy,Once daily,Sleepiness,Avoid alcohol
+Benadryl Syrup 5,Cough,As prescribed,Drowsiness,Avoid driving
+Ascoril Syrup 5,Cough,As prescribed,Nausea,Use as directed
+Sinarest 5,Cold,As prescribed,Drowsiness,Avoid alcohol
+ORS 5,Dehydration,As needed,None,Prepare correctly
+Zincovit 5,Vitamin supplement,Daily,Mild stomach upset,Use as directed
+Neurobion Forte 5,Vitamin B,Daily,Nausea,Use as directed
+Shelcal 500 5,Calcium supplement,Daily,Constipation,Take after meals
+Asthalin Inhaler 5,Asthma,As prescribed,Tremors,Correct inhaler technique
+Budecort 5,Asthma,As prescribed,Throat irritation,Rinse mouth
+Foracort 5,Asthma,As prescribed,Hoarseness,Rinse mouth
+Candid Cream 5,Fungal infection,Apply twice daily,Skin irritation,External use
+Clotrimazole 5,Fungal infection,Apply twice daily,Burning sensation,External use
+Betadine 5,Wound antiseptic,Apply locally,Skin irritation,External use
+Volini Gel 5,Muscle pain,Apply locally,Skin irritation,External use
+Digene 5,Acidity,As needed,Constipation,Do not overuse
+Loperamide 5,Diarrhea,As prescribed,Constipation,Avoid in bloody diarrhea
+Ondansetron 5,Vomiting,As prescribed,Headache,Prescription only
+Domperidone 5,Nausea,As prescribed,Dry mouth,Prescription only
+Albendazole 5,Deworming,Single dose,Abdominal pain,Take after food
+Fluconazole 5,Fungal infection,As prescribed,Nausea,Prescription only
+Acyclovir 5,Viral infection,As prescribed,Headache,Prescription only
+Doxycycline 5,Bacterial infection,As prescribed,Photosensitivity,Avoid dairy near dose
+Ciprofloxacin 5,Bacterial infection,As prescribed,Nausea,Prescription only
+Montelukast 5,Allergy/Asthma,Night,Headache,Prescription only
+Thyronorm 5,Hypothyroidism,Morning empty stomach,Palpitations,Monitor thyroid
+Insulin 5,Diabetes,As prescribed,Low blood sugar,Store refrigerated
+Paracetamol 6,Pain and fever relief,500 mg every 4-6 hours,"Nausea, rash",Do not exceed recommended dose
+Dolo 650 6,"Fever, body pain",650 mg as prescribed,Nausea,Avoid overdose
+Crocin 6,Fever and pain,As prescribed,Liver damage (overdose),Avoid alcohol
+Combiflam 6,"Pain, inflammation",After food,"Acidity, nausea",Avoid in ulcers
+Brufen 6,"Pain, fever",200-400 mg,Stomach upset,Take after food
+Ibuprofen 6,"Pain, inflammation",200-400 mg,Heartburn,Avoid if ulcer
+Aspirin 6,"Pain, blood thinner",As prescribed,Bleeding,Avoid in children
+Diclofenac 6,Pain,As prescribed,Acidity,Avoid prolonged use
+Naproxen 6,Pain,As prescribed,Stomach pain,Take after meals
+Tramadol 6,Moderate pain,As prescribed,Dizziness,Prescription only
+Amoxicillin 6,Bacterial infections,As prescribed,Diarrhea,Complete course
+Augmentin 6,Bacterial infections,As prescribed,Diarrhea,Prescription only
+Azithromycin 6,Respiratory infections,As prescribed,Nausea,Complete course
+Cefixime 6,Bacterial infections,As prescribed,Loose stools,Prescription only
+Metformin 6,Type 2 diabetes,As prescribed,Stomach upset,Take with food
+Glimepiride 6,Diabetes,As prescribed,Low sugar,Monitor glucose
+Amlodipine 6,High BP,As prescribed,Swelling,Monitor BP
+Telmisartan 6,High BP,As prescribed,Dizziness,Monitor BP
+Losartan 6,High BP,As prescribed,Dizziness,Pregnancy warning
+Pantoprazole 6,Acidity,Before breakfast,Headache,Use as directed
