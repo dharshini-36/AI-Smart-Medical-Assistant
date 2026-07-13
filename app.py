@@ -25,13 +25,15 @@ st.set_page_config(
 
 @st.cache_data
 def load_medicine_data():
-    try:
-        return pd.read_csv("medicines.csv")
-    except Exception:
-        return pd.DataFrame()
+    df = pd.read_csv("medicines.csv")
 
+    # Remove spaces from column names
+    df.columns = df.columns.str.strip()
 
-medicine_df = load_medicine_data()
+    # Remove spaces from medicine names
+    df["Medicine"] = df["Medicine"].astype(str).str.strip()
+
+    return df
 
 # ==========================================
 # HEALTH KNOWLEDGE BASE (used by chatbot)
