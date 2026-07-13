@@ -644,7 +644,7 @@ menu = st.sidebar.radio(
         "📄 Prescription Reader",
         "❤️ Health Tips",
         "🤖 Health Chatbot",
-        "ℹ About"
+        "About"
     ]
 )
 
