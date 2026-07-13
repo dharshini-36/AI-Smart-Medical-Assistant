@@ -902,8 +902,10 @@ Do not guess.
         
                     response = client.models.generate_content(
                         model="gemini-2.5-flash-lite",
-                        contents=[prompt, image]
+                        contents="Hello"
                     )
+                    
+                    print(response.text)
 
         
                     st.subheader("Extracted Prescription")
