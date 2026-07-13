@@ -59,13 +59,13 @@ MediAssist-AI/
 
 ---
 
-## 🚀 Installation
+## 🚀 Run Locally
 
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/MediAssist-AI.git
-cd MediAssist-AI
+git clone https://github.com/dharshini-36/your-repository-name.git
+cd your-repository-name
 ```
 
 ### Install dependencies
@@ -76,9 +76,9 @@ pip install -r requirements.txt
 
 ### Add your Gemini API Key
 
-Create the following file:
+Create:
 
-```
+```text
 .streamlit/secrets.toml
 ```
 
@@ -88,9 +88,7 @@ Add:
 GEMINI_API_KEY="YOUR_API_KEY"
 ```
 
----
-
-## ▶️ Run the Application
+### Run the application
 
 ```bash
 streamlit run app.py
