@@ -40,7 +40,6 @@ def load_medicine_data():
 
 
 medicine_df = load_medicine_data()
-st.write(medicine_df.columns.tolist())
 # ==========================================
 # HEALTH KNOWLEDGE BASE (used by chatbot)
 # ==========================================
@@ -839,7 +838,7 @@ elif menu == "💊 Medicine Search":
                 st.success(medicine["Dosage"])
 
                 st.write("### Side Effects")
-                st.warning(medicine["SideEffects"])
+                st.warning(medicine["Side Effects"])
 
                 st.write("### Warnings")
                 st.error(medicine["Warnings"])
