@@ -900,27 +900,27 @@ If something is unreadable write 'Unclear'.
 Do not guess.
 """
 
-        try:
-
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=[
-                    prompt,
-                    image
-                ]
-            )
-
-            st.subheader("Extracted Prescription")
-            st.write(response.text)
-
-            st.download_button(
-                "Download",
-                response.text,
-                file_name="prescription.txt"
-            )
-
-        except Exception as e:
-            st.error(f"Gemini Error:\n{e}")
+            try:
+    
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=[
+                        prompt,
+                        image
+                    ]
+                )
+    
+                st.subheader("Extracted Prescription")
+                st.write(response.text)
+    
+                st.download_button(
+                    "Download",
+                    response.text,
+                    file_name="prescription.txt"
+                )
+    
+            except Exception as e:
+                st.error(f"Gemini Error:\n{e}")
 # ==========================================
 # HEALTH TIPS
 # ==========================================
