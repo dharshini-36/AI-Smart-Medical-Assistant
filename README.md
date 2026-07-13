@@ -1,31 +1,46 @@
 # 🏥 MediAssist AI - Smart Medical Assistant
 
-MediAssist AI is a simple and interactive healthcare assistant developed using **Python** and **Streamlit**. It provides useful healthcare-related tools such as BMI calculation, medicine information, prescription text extraction using OCR, health tips, and an AI-powered healthcare chatbot.
+An AI-powered healthcare assistant built using **Python**, **Streamlit**, and **Google Gemini API**. MediAssist AI provides essential healthcare tools such as a BMI calculator, medicine information search, AI-powered prescription reading, health tips, and a medical chatbot through a simple and user-friendly interface.
 
-> **Disclaimer:** This application is developed for educational purposes only and should not be considered a substitute for professional medical advice, diagnosis, or treatment.
-
----
-
-## 🚀 Features
-
-- ⚖️ BMI Calculator
-- 💊 Medicine Information Search
-- 📄 Prescription Reader (OCR)
-- 🤖 AI Health Chatbot
-- ❤️ Daily Health Tips
-- 📱 Interactive and User-Friendly Interface
+> **Note:** This project is developed for educational purposes and is not a substitute for professional medical advice.
 
 ---
 
-## 🛠️ Technologies Used
+## 📌 Features
+
+- ⚖️ **BMI Calculator**
+  - Calculates Body Mass Index (BMI)
+  - Displays health category and recommendations
+
+- 💊 **Medicine Information Search**
+  - Search medicines from a built-in dataset
+  - View uses, dosage, side effects, and warnings
+
+- 📄 **AI Prescription Reader**
+  - Upload a prescription image
+  - Extract medicine names and prescription details using Google Gemini AI
+
+- 🤖 **AI Health Chatbot**
+  - Answers basic health-related questions
+  - Provides information on symptoms, causes, treatments, prevention, and specialists
+
+- ❤️ **Daily Health Tips**
+  - Displays useful health and wellness tips
+
+- 🎨 **Interactive Streamlit Interface**
+  - Clean, responsive, and easy-to-use web application
+
+---
+
+## 🛠️ Tech Stack
 
 - Python
 - Streamlit
+- Google Gemini API
 - Pandas
 - NumPy
-- EasyOCR
 - Pillow
-- OpenCV
+- CSV Dataset
 
 ---
 
@@ -33,35 +48,51 @@ MediAssist AI is a simple and interactive healthcare assistant developed using *
 
 ```
 MediAssist-AI/
-│── app.py
-│── medicines.csv
-│── requirements.txt
-│── README.md
+│
+├── app.py
+├── medicines.csv
+├── requirements.txt
+├── .streamlit/
+│   └── secrets.toml
+├── assets/
+│   └── screenshots
+└── README.md
 ```
 
 ---
 
-## 📦 Installation
+## 🚀 Installation
 
-### 1. Clone the Repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/your-username/MediAssist-AI.git
-```
-
-### 2. Navigate to the Project Folder
-
-```bash
 cd MediAssist-AI
 ```
 
-### 3. Install Dependencies
+### Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the Application
+### Add your Gemini API Key
+
+Create the following file:
+
+```
+.streamlit/secrets.toml
+```
+
+Add:
+
+```toml
+GEMINI_API_KEY="YOUR_API_KEY"
+```
+
+---
+
+## ▶️ Run the Application
 
 ```bash
 streamlit run app.py
@@ -69,51 +100,41 @@ streamlit run app.py
 
 ---
 
+### Home Page
+<img width="1366" height="625" alt="image" src="https://github.com/user-attachments/assets/ce7a7f42-148c-4d33-8962-29e03f0f65f1" />
+
+
+### BMI Calculator
+
+<img width="1272" height="620" alt="image" src="https://github.com/user-attachments/assets/65ca2f2f-9dd4-46fb-84af-4bda74d855a7" />
+
+### Medicine Search
+
+<img width="1364" height="622" alt="image" src="https://github.com/user-attachments/assets/5dccc60e-af9c-4283-91d2-8955a67d3e48" />
+
+### Prescription Reader
+
+<img width="1366" height="631" alt="image" src="https://github.com/user-attachments/assets/329af4d7-1246-49e7-9c2e-32da6b8c7aaa" />
+
+### Health Chatbot
+
+<img width="1366" height="640" alt="image" src="https://github.com/user-attachments/assets/bb1026a9-8a54-49c7-b875-b82241f07ab5" />
+
 ## 🌐 Live Demo
 
 https://ai-smart-medical-assistant-project.streamlit.app/
 
 ---
 
-## 📖 How to Use
+## 📚 Future Improvements
 
-### BMI Calculator
-- Enter your height and weight.
-- Click **Calculate BMI**.
-- View your BMI value and health category.
-
-### Medicine Search
-- Enter the medicine name.
-- View its uses, dosage, side effects, and warnings.
-
-### Prescription Reader
-- Upload an image of a prescription.
-- OCR extracts the text automatically.
-- View the extracted prescription details.
-
-### AI Health Chatbot
-Ask questions such as:
-
-- Symptoms of Fever
-- Causes of Diabetes
-- Treatment for Asthma
-- Prevention of Dengue
-- Doctor for Migraine
-- Uses of Paracetamol
-
-### Health Tips
-Read general health and wellness recommendations for maintaining a healthy lifestyle.
-
----
-
-## 🎯 Future Enhancements
-
-- Appointment Booking System
-- Nearby Hospital Finder
-- Voice-Based Health Assistant
-- Medicine Reminder
+- Voice Assistant
+- Appointment Booking
+- Disease Prediction
+- Medicine Recommendation
+- Nearby Hospital Locator
 - Multi-language Support
-- Health Report Generation
+- PDF Prescription Export
 
 ---
 
@@ -121,7 +142,11 @@ Read general health and wellness recommendations for maintaining a healthy lifes
 
 **Dharshini Natarajan**
 
-B.Sc Computer Science with Artificial Intelligence
+B.Sc. Computer Science with Artificial Intelligence
+
+GitHub: https://github.com/dharshini-36
+
+LinkedIn: *(Add your LinkedIn profile link)*
 
 ---
 
@@ -131,10 +156,4 @@ This project is developed for educational and learning purposes.
 
 ---
 
-## ⭐ Support
-
-If you found this project useful, consider giving the repository a ⭐ on GitHub.
-
-Feedback and suggestions are always welcome!
-
-<img width="1353" height="631" alt="image" src="https://github.com/user-attachments/assets/b18fed09-7614-4554-8ec6-f648f15f7b3d" />
+⭐ If you found this project useful, please consider giving it a star!
