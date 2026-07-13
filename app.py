@@ -900,12 +900,10 @@ Do not guess.
 """
 
                 try:
+                    image = Image.open(uploaded_file)
                     response = client.models.generate_content(
                         model="gemini-2.5-flash-lite",
-                        contents=[
-                            prompt,
-                            image
-                        ]
+                        contents=[prompt,image]
                     )
         
                     st.subheader("Extracted Prescription")
