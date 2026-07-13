@@ -902,7 +902,7 @@ Do not guess.
         
                     response = client.models.generate_content(
                         model="gemini-2.5-flash-lite",
-                        contents="Hello"
+                        contents=[prompt, image]
                     )
                     
                     print(response.text)
