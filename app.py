@@ -869,10 +869,8 @@ elif menu == "📄 Prescription Reader":
         st.image(image, use_container_width=True)
 
         if st.button("Extract Prescription"):
-
-    with st.spinner("Analyzing Prescription..."):
-
-        prompt = """
+            with st.spinner("Analyzing Prescription..."):
+                prompt = """
 You are a medical OCR assistant.
 
 Read this prescription carefully.
