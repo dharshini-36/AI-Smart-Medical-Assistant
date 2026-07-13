@@ -8,10 +8,9 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import os
-import google.generativeai as genai
+from google import genai
 
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-model = genai.GenerativeModel("gemini-1.5-flash")
+client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 # ==========================================
 # PAGE CONFIG
@@ -901,8 +900,11 @@ Do not guess.
 
                 try:
         
-                    response = model.generate_content(
-                        [prompt,image])
+                    response = client.models.generate_content(
+                        model="gemini-2.5-flash-lite",
+                        contents=[prompt, image]
+                    )
+
         
                     st.subheader("Extracted Prescription")
                     st.write(response.text)
