@@ -54,8 +54,6 @@ MediAssist-AI/
 ├── requirements.txt
 ├── .streamlit/
 │   └── secrets.toml
-├── assets/
-│   └── screenshots
 └── README.md
 ```
 
