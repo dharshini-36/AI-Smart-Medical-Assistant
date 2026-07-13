@@ -11,6 +11,7 @@ import os
 from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+image = Image.open(uploaded_file)
 
 # ==========================================
 # PAGE CONFIG
@@ -899,16 +900,12 @@ Do not guess.
 """
 
                 try:
-                    image_bytes = uploaded_file.getvalue()
                     response = client.models.generate_content(
                         model="gemini-2.5-flash-lite",
                         contents=[
                             prompt,
-                            {
-                                "mime_type": uploaded_file.type,
-                                "data": image_bytes,
-                            },
-                        ],
+                            image
+                        ]
                     )
         
                     st.subheader("Extracted Prescription")
