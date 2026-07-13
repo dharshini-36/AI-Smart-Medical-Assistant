@@ -902,18 +902,20 @@ If something is unreadable write 'Unclear'.
 Do not guess.
 """
 
-                response = client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=[
-                    prompt,
-                    image
-                ]
-            )
+                try:
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=[
+            prompt,
+            image
+        ]
+    )
 
+    st.subheader("Extracted Prescription")
+    st.write(response.text)
 
-                st.subheader("Extracted Prescription")
-
-                st.write(response.text)
+except Exception as e:
+    st.error(str(e))
 
                 st.download_button(
                     "Download",
