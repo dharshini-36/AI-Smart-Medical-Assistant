@@ -903,19 +903,18 @@ Do not guess.
 """
 
                 try:
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=[
-            prompt,
-            image
-        ]
-    )
+                    response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=[
+                    prompt,
+                    image
+                    ]
+                    )
 
-    st.subheader("Extracted Prescription")
-    st.write(response.text)
-
-except Exception as e:
-    st.error(str(e))
+                st.subheader("Extracted Prescription")
+                st.write(response.text)
+                except Exception as e:
+                st.error(str(e))
 
                 st.download_button(
                     "Download",
