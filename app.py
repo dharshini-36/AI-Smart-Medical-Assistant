@@ -692,8 +692,6 @@ if menu == "🏠 Home":
 
     st.divider()
 
-    st.subheader("✨ Features")
-
     st.markdown("""
 ### 🚀 Features
 
