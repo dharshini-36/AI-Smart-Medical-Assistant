@@ -1,7 +1,7 @@
-==========================================
-MediAssist AI - Intelligent Healthcare Assistant
-app.py
-==========================================
+#==========================================
+#MediAssist AI - Intelligent Healthcare Assistant
+#app.py
+#==========================================
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -11,18 +11,18 @@ from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
-==========================================
-PAGE CONFIG
-==========================================
+#==========================================
+#PAGE CONFIG
+#==========================================
 st.set_page_config(
 page_title="MediAssist AI",
 page_icon="🏥",
 layout="wide"
 )
 
-==========================================
-LOAD DATA
-==========================================
+#==========================================
+#LOAD DATA
+#==========================================
 @st.cache_data
 def load_medicine_data():
 try:
@@ -39,9 +39,9 @@ except Exception as e:
     return pd.DataFrame()
 medicine_df = load_medicine_data()
 
-==========================================
-HEALTH KNOWLEDGE BASE (used by chatbot)
-==========================================
+#==========================================
+#HEALTH KNOWLEDGE BASE (used by chatbot)
+#==========================================
 medical_data = {
 
 "fever":{
@@ -593,18 +593,18 @@ medical_data = {
 }
 }
 
-==========================================
-CUSTOM CSS
-==========================================
+#==========================================
+#CUSTOM CSS
+#==========================================
 st.markdown("""
 
 <style> .main{ background-color:#F4F9FF; } .title{ text-align:center; color:#0F4C81; font-size:42px; font-weight:bold; } .subtitle{ text-align:center; color:gray; font-size:18px; } .card{ background:white; padding:20px; border-radius:12px; box-shadow:0px 2px 10px rgba(0,0,0,0.1); } .metric-box{ background:#E8F3FF; padding:15px; border-radius:10px; text-align:center; } </style>
 
 """, unsafe_allow_html=True)
 
-==========================================
-SIDEBAR
-==========================================
+#==========================================
+#SIDEBAR
+#==========================================
 st.sidebar.title("🏥 MediAssist AI")
 
 menu = st.sidebar.radio(
@@ -677,9 +677,9 @@ st.markdown("""
 
 """)
 
-==========================================
-BMI CALCULATOR
-==========================================
+#==========================================
+#BMI CALCULATOR
+#==========================================
 elif menu == "⚖ BMI Calculator":
 
 st.title("⚖ BMI Calculator")
@@ -759,9 +759,9 @@ if st.button("Calculate BMI"):
     st.info(
         "BMI is only a screening tool and does not diagnose body fat or medical conditions."
     )
-==========================================
-MEDICINE SEARCH
-==========================================
+#==========================================
+#MEDICINE SEARCH
+#==========================================
 elif menu == "💊 Medicine Search":
 
 st.title("💊 Medicine Information")
@@ -802,9 +802,9 @@ else:
 
             st.write("### Warnings")
             st.error(medicine["Warnings"])
-==========================================
-PRESCRIPTION READER (OCR)
-==========================================
+#==========================================
+#PRESCRIPTION READER (OCR)
+#==========================================
 elif menu == "📄 Prescription Reader":
 
 st.title("📄 AI Prescription Reader")
@@ -869,9 +869,9 @@ Do not guess.
     
             except Exception as e:
                 st.error(f"Gemini Error:\n{e}")
-==========================================
-HEALTH TIPS
-==========================================
+#==========================================
+#HEALTH TIPS
+#==========================================
 elif menu == "❤️ Health Tips":
 
 st.title("❤️ Daily Health Tips")
@@ -1015,9 +1015,9 @@ Try asking:
 • Uses of Paracetamol
 """)
 
-==========================================
-ABOUT PAGE
-==========================================
+#==========================================
+#ABOUT PAGE
+#==========================================
 elif menu == "About":
 
 st.title("About MediAssist AI")
