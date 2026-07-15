@@ -11,7 +11,16 @@ import os
 from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+try:
+    response = client.models.generate_content(
+        model="gemini-2.5-flash-lite",
+        contents="Hello"
+    )
 
+    st.write(response.text)
+
+except Exception as e:
+    st.error(e)
 
 def ask_ai(question):
     prompt = f"""
