@@ -1,42 +1,24 @@
-#==========================================
-#MediAssist AI - Intelligent Healthcare Assistant
-#app.py
-#==========================================
 import streamlit as st
 import pandas as pd
 import numpy as np
 from PIL import Image
 import os
-from google import genai  # This is the correct import
+from google import genai
 
-# Initialize the client using the genai module
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-available_models = [m.name for m in client.models.list() if "generateContent" in m.supported_actions]
 
-# 2. Display them in the sidebar
-selected_model = st.sidebar.selectbox("Select a Model", available_models)
-
-# 3. Use the selected model in your code
-# Replace your hardcoded string with the variable 'selected_model'
-if st.button("Extract Prescription"):
-    response = client.models.generate_content(
-        model=selected_model, 
-        contents=[prompt, image]
-    )
-    st.write(response.text)
-
-#==========================================
-#PAGE CONFIG
-#==========================================
+# ==========================================
+# PAGE CONFIG
+# ==========================================
 st.set_page_config(
     page_title="MediAssist AI",
     page_icon="🏥",
     layout="wide"
 )
 
-#==========================================
-#LOAD DATA
-#==========================================
+# ==========================================
+# LOAD DATA
+# ==========================================
 @st.cache_data
 def load_medicine_data():
     try:
@@ -51,9 +33,9 @@ def load_medicine_data():
 
 medicine_df = load_medicine_data()
 
-#==========================================
-#HEALTH KNOWLEDGE BASE (used by chatbot)
-#==========================================
+# ==========================================
+# HEALTH KNOWLEDGE BASE (used by chatbot)
+# ==========================================
 medical_data = {
     "fever": {
         "symptoms": ["High body temperature", "Chills", "Headache", "Body pain", "Weakness"],
@@ -204,9 +186,9 @@ medical_data = {
     }
 }
 
-#==========================================
-#CUSTOM CSS
-#==========================================
+# ==========================================
+# CUSTOM CSS
+# ==========================================
 st.markdown("""
 <style> 
     .main{ background-color:#F4F9FF; } 
@@ -217,34 +199,34 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-#==========================================
-#SIDEBAR
-#==========================================
+# ==========================================
+# SIDEBAR
+# ==========================================
 st.sidebar.title("🏥 MediAssist AI")
 menu = st.sidebar.radio(
     "Navigation",
     ["🏠 Home", "⚖ BMI Calculator", "💊 Medicine Search", "📄 Prescription Reader", "❤️ Health Tips", "🤖 Health Chatbot", "About"]
 )
 
-#==========================================
-#HOME PAGE
-#==========================================
+# ==========================================
+# HOME PAGE
+# ==========================================
 if menu == "🏠 Home":
     st.markdown("<div class='title'>🏥 MediAssist AI</div>", unsafe_allow_html=True)
     st.markdown("<div class='subtitle'>Intelligent Healthcare Assistant</div>", unsafe_allow_html=True)
     st.write("")
-
+    
     col1, col2, col3 = st.columns(3)
     with col1: st.info("🤖 AI Health Chatbot")
     with col2: st.success("⚖ BMI Calculator")
     with col3: st.warning("💊 Medicine Information")
-
+    
     st.write("")
     col4, col5, col6 = st.columns(3)
     with col4: st.info("📄 Prescription Reader")
     with col5: st.success("❤️ Health Tips")
     with col6: st.warning("🤖 AI Health Chatbot")
-
+    
     st.divider()
     st.markdown("""
     🚀 Features
@@ -255,14 +237,16 @@ if menu == "🏠 Home":
     ✅ AI Healthcare Chatbot
     """)
 
-#==========================================
-#BMI CALCULATOR
-#==========================================
+# ==========================================
+# BMI CALCULATOR
+# ==========================================
 elif menu == "⚖ BMI Calculator":
     st.title("⚖ BMI Calculator")
     col1, col2 = st.columns(2)
-    with col1: height = st.number_input("Height (cm)", min_value=50, max_value=250, value=170)
-    with col2: weight = st.number_input("Weight (kg)", min_value=10, max_value=250, value=65)
+    with col1:
+        height = st.number_input("Height (cm)", min_value=50, max_value=250, value=170)
+    with col2:
+        weight = st.number_input("Weight (kg)", min_value=10, max_value=250, value=65)
 
     if st.button("Calculate BMI"):
         bmi = weight / ((height / 100) ** 2)
@@ -285,9 +269,9 @@ elif menu == "⚖ BMI Calculator":
         for tip in tips: st.write("✅", tip)
         st.info("BMI is only a screening tool and does not diagnose body fat or medical conditions.")
 
-#==========================================
-#MEDICINE SEARCH
-#==========================================
+# ==========================================
+# MEDICINE SEARCH
+# ==========================================
 elif menu == "💊 Medicine Search":
     st.title("💊 Medicine Information")
     if medicine_df.empty:
@@ -307,23 +291,23 @@ elif menu == "💊 Medicine Search":
                 st.write("### Side Effects"); st.warning(medicine["SideEffects"])
                 st.write("### Warnings"); st.error(medicine["Warnings"])
 
-#==========================================
-#PRESCRIPTION READER (OCR)
-#==========================================
+# ==========================================
+# PRESCRIPTION READER (OCR)
+# ==========================================
 elif menu == "📄 Prescription Reader":
     st.title("📄 AI Prescription Reader")
     uploaded_file = st.file_uploader("Upload Prescription", type=["png","jpg","jpeg"])
     if uploaded_file:
         image = Image.open(uploaded_file)
         st.image(image, use_container_width=True)
-        if st.button("Extract Prescription", key="extract_btn_1"):
+        if st.button("Extract Prescription"):
             with st.spinner("Analyzing Prescription..."):
-                prompt = """You are a medical OCR assistant. Read this prescription carefully. 
-                Extract: Doctor Name, Hospital/Clinic Name, Patient Name, Date, Medicine Name, Dosage, Frequency, Duration, Doctor Instructions.
-                If something is unreadable write 'Unclear'. Do not guess."""
+                prompt = """You are a medical OCR assistant. Read this prescription carefully.
+                Extract: Doctor Name, Hospital/Clinic Name, Patient Name, Date, Medicine Name, 
+                Dosage, Frequency, Duration, Doctor Instructions. If something is unreadable write 'Unclear'."""
                 try:
                     response = client.models.generate_content(
-                        model="gemini-1.5-flash-001",
+                        model="gemini-2.5-flash-lite",
                         contents=[prompt, image]
                     )
                     st.subheader("Extracted Prescription")
@@ -332,9 +316,9 @@ elif menu == "📄 Prescription Reader":
                 except Exception as e:
                     st.error(f"Gemini Error:\n{e}")
 
-#==========================================
-#HEALTH TIPS
-#==========================================
+# ==========================================
+# HEALTH TIPS
+# ==========================================
 elif menu == "❤️ Health Tips":
     st.title("❤️ Daily Health Tips")
     tips = [
@@ -346,22 +330,21 @@ elif menu == "❤️ Health Tips":
     ]
     for tip in tips: st.success("✅ " + tip)
 
-#==========================================
-#AI HEALTH CHATBOT
-#==========================================
+# ==========================================
+# AI HEALTH CHATBOT
+# ==========================================
 elif menu == "🤖 Health Chatbot":
     st.title("🤖 MediAssist AI Chatbot")
-    st.write("Ask questions like: Symptoms of Fever, Causes of Diabetes, Treatment for Asthma, Prevention of Dengue, Doctor for Migraine, Uses of Paracetamol")
     question = st.text_input("Ask your health question")
-
     if st.button("Ask"):
         q = question.lower()
         found = False
-        if q in ["hi", "hello", "hey", "good morning", "good evening"]:
-            st.success("Hello 👋 Welcome to MediAssist AI!")
-            st.info("You can ask about symptoms, causes, treatment, prevention, doctors or medicines.")
-            found = True
         
+        # Greetings
+        if q in ["hi", "hello", "hey", "good morning", "good evening"]:
+            st.success("Hello 👋 Welcome to MediAssist AI!"); found = True
+        
+        # Disease Knowledge
         for disease, info in medical_data.items():
             if disease in q:
                 found = True
@@ -378,31 +361,29 @@ elif menu == "🤖 Health Chatbot":
                     st.subheader("Prevention")
                     for item in info["prevention"]: st.write("✅", item)
                 elif "doctor" in q:
-                    st.subheader("Recommended Specialist")
-                    st.success(info["doctor"])
-                else:
-                    st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
+                    st.subheader("Recommended Specialist"); st.success(info["doctor"])
+                else: st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
                 break
 
+        # Medicine Search
         if not found and not medicine_df.empty:
             for _, row in medicine_df.iterrows():
                 if row["Medicine"].lower() in q:
                     found = True
                     st.success(row["Medicine"])
-                    st.write("### Uses"); st.write(row["Uses"])
-                    st.write("### Dosage"); st.write(row["Dosage"])
-                    st.write("### Side Effects"); st.write(row["Side Effects"])
-                    st.write("### Warnings"); st.write(row["Warnings"])
+                    st.write("### Uses", row["Uses"], "### Dosage", row["Dosage"], 
+                             "### Side Effects", row["Side Effects"], "### Warnings", row["Warnings"])
                     break
-        
-        if not found:
-            st.warning("Sorry, I couldn't understand your question.")
+        if not found: st.warning("Sorry, I couldn't understand your question.")
 
-#==========================================
-#ABOUT PAGE
-#==========================================
+# ==========================================
+# ABOUT PAGE
+# ==========================================
 elif menu == "About":
     st.title("About MediAssist AI")
-    st.markdown("""🏥 MediAssist AI\nAn AI-powered healthcare assistant developed using: Streamlit, Python, Google Gemini API, Pandas, NumPy.\n\nDeveloper: Dharshini Natarajan""")
+    st.markdown("""
+    🏥 MediAssist AI - An AI-powered healthcare assistant.
+    Features: BMI Calculator, Medicine Info, Prescription OCR, Health Chatbot.
+    """)
     st.markdown("---")
-    st.caption("© 2026 MediAssist AI | Educational Project | Not a substitute for professional medical advice.")
+    st.caption("© 2026 MediAssist AI | Not a substitute for professional medical advice.")
