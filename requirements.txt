@@ -1,5 +1,5 @@
-streamlit
-pandas
-numpy
-Pillow
-google-genai
+streamlit>=1.45.0
+pandas>=2.2.2
+numpy>=2.0.0
+Pillow>=11.0.0
+google-genai>=1.30.0
