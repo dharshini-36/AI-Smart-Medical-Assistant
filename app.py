@@ -310,7 +310,7 @@ elif menu == "📄 Prescription Reader":
                 If something is unreadable write 'Unclear'. Do not guess."""
                 try:
                     response = client.models.generate_content(
-                        gemini-1.5-flash,
+                        model="gemini-1.5-flash",
                         contents=[prompt, image]
                     )
                     st.subheader("Extracted Prescription")
