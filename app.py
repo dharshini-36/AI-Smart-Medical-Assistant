@@ -11,6 +11,8 @@ from google import genai  # This is the correct import
 
 # Initialize the client using the genai module
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+for model in client.models.list():
+    print(f"Model Name: {model.name}")
 
 #==========================================
 #PAGE CONFIG
