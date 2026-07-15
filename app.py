@@ -11,8 +11,19 @@ from google import genai  # This is the correct import
 
 # Initialize the client using the genai module
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-for model in client.models.list():
-    print(f"Model Name: {model.name}")
+available_models = [m.name for m in client.models.list() if "generateContent" in m.supported_actions]
+
+# 2. Display them in the sidebar
+selected_model = st.sidebar.selectbox("Select a Model", available_models)
+
+# 3. Use the selected model in your code
+# Replace your hardcoded string with the variable 'selected_model'
+if st.button("Extract Prescription"):
+    response = client.models.generate_content(
+        model=selected_model, 
+        contents=[prompt, image]
+    )
+    st.write(response.text)
 
 #==========================================
 #PAGE CONFIG
