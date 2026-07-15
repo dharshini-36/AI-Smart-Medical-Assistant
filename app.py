@@ -7,8 +7,9 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import os
-from google import genai
+from google import genai  # This is the correct import
 
+# Initialize the client using the genai module
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 #==========================================
