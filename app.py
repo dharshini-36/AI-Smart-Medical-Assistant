@@ -11,8 +11,14 @@ import os
 from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
-for model in client.models.list():
-    print(model.name)
+try:
+    models = client.models.list()
+
+    for model in models:
+        print(model.name)
+
+except Exception as e:
+    print(e)
 
 
 def ask_ai(question):
