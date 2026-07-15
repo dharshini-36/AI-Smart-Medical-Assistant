@@ -316,7 +316,7 @@ elif menu == "📄 Prescription Reader":
     if uploaded_file:
         image = Image.open(uploaded_file)
         st.image(image, use_container_width=True)
-        if st.button("Extract Prescription"):
+        if st.button("Extract Prescription", key="extract_btn_1"):
             with st.spinner("Analyzing Prescription..."):
                 prompt = """You are a medical OCR assistant. Read this prescription carefully. 
                 Extract: Doctor Name, Hospital/Clinic Name, Patient Name, Date, Medicine Name, Dosage, Frequency, Duration, Doctor Instructions.
