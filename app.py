@@ -31,7 +31,7 @@ Question:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.5-flash-lite",
         contents=prompt
     )
 
@@ -969,12 +969,6 @@ elif menu == "❤️ Health Tips":
 # ==========================================
 
 elif menu == "🤖 Health Chatbot":
-    try:
-        models = client.models.list()
-        for model in models:
-            print(model.name)
-    except Exception as e:
-        print(e)
 
     st.title("🤖 MediAssist AI Chatbot")
 
