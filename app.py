@@ -1,8 +1,7 @@
-# ==========================================
-# MediAssist AI - Intelligent Healthcare Assistant
-# app.py
-# ==========================================
-
+==========================================
+MediAssist AI - Intelligent Healthcare Assistant
+app.py
+==========================================
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -12,724 +11,660 @@ from google import genai
 
 client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
-def ask_ai(question):
-    prompt = f"""
-You are MediAssist AI, a helpful healthcare assistant.
-
-Answer the user's medical question in simple language.
-
-Rules:
-- Give educational information only.
-- Do not prescribe medicines.
-- If it is an emergency, advise consulting a doctor immediately.
-- Keep answers short (100-200 words).
-- Use bullet points whenever possible.
-
-Question:
-{question}
-"""
-
-    response = client.models.generate_content(
-        model="gemini-2.5-flash-lite",
-        contents=prompt
-    )
-
-    return response.text
-
-# ==========================================
-# PAGE CONFIG
-# ==========================================
-
+==========================================
+PAGE CONFIG
+==========================================
 st.set_page_config(
-    page_title="MediAssist AI",
-    page_icon="🏥",
-    layout="wide"
+page_title="MediAssist AI",
+page_icon="🏥",
+layout="wide"
 )
 
-# ==========================================
-# LOAD DATA
-# ==========================================
-
+==========================================
+LOAD DATA
+==========================================
 @st.cache_data
 def load_medicine_data():
-    try:
-        df = pd.read_csv("medicines.csv")
+try:
+df = pd.read_csv("medicines.csv")
 
-        # Clean column names and medicine names
-        df.columns = df.columns.str.strip()
-        df["Medicine"] = df["Medicine"].astype(str).str.strip()
+    # Clean column names and medicine names
+    df.columns = df.columns.str.strip()
+    df["Medicine"] = df["Medicine"].astype(str).str.strip()
 
-        return df
+    return df
 
-    except Exception as e:
-        st.error(f"Error loading medicines.csv: {e}")
-        return pd.DataFrame()
-
-
+except Exception as e:
+    st.error(f"Error loading medicines.csv: {e}")
+    return pd.DataFrame()
 medicine_df = load_medicine_data()
 
-# ==========================================
-# HEALTH KNOWLEDGE BASE (used by chatbot)
-# ==========================================
-
+==========================================
+HEALTH KNOWLEDGE BASE (used by chatbot)
+==========================================
 medical_data = {
 
-    "fever":{
+"fever":{
 
-        "symptoms":[
-            "High body temperature",
-            "Chills",
-            "Headache",
-            "Body pain",
-            "Weakness"
-        ],
+    "symptoms":[
+        "High body temperature",
+        "Chills",
+        "Headache",
+        "Body pain",
+        "Weakness"
+    ],
 
-        "causes":[
-            "Viral infection",
-            "Bacterial infection",
-            "Flu",
-            "COVID-19"
-        ],
+    "causes":[
+        "Viral infection",
+        "Bacterial infection",
+        "Flu",
+        "COVID-19"
+    ],
 
-        "treatment":[
-            "Drink fluids",
-            "Take rest",
-            "Paracetamol (if prescribed)"
-        ],
+    "treatment":[
+        "Drink fluids",
+        "Take rest",
+        "Paracetamol (if prescribed)"
+    ],
 
-        "prevention":[
-            "Wash hands",
-            "Drink clean water",
-            "Maintain hygiene"
-        ],
+    "prevention":[
+        "Wash hands",
+        "Drink clean water",
+        "Maintain hygiene"
+    ],
 
-        "doctor":"General Physician"
+    "doctor":"General Physician"
 
-    },
-    "flu": {
-        "symptoms": [
-            "High fever",
-            "Cough",
-            "Body pain",
-            "Fatigue",
-            "Headache",
-            "Chills"
-        ],
-        "causes": [
-            "Influenza virus"
-        ],
-        "treatment": [
-            "Take adequate rest",
-            "Drink plenty of fluids",
-            "Take medicines prescribed by your doctor"
-        ],
-        "prevention": [
-            "Wash hands frequently",
-            "Cover mouth while coughing",
-            "Annual flu vaccination"
-        ],
-        "doctor": "General Physician"
-    },
+},
+"flu": {
+    "symptoms": [
+        "High fever",
+        "Cough",
+        "Body pain",
+        "Fatigue",
+        "Headache",
+        "Chills"
+    ],
+    "causes": [
+        "Influenza virus"
+    ],
+    "treatment": [
+        "Take adequate rest",
+        "Drink plenty of fluids",
+        "Take medicines prescribed by your doctor"
+    ],
+    "prevention": [
+        "Wash hands frequently",
+        "Cover mouth while coughing",
+        "Annual flu vaccination"
+    ],
+    "doctor": "General Physician"
+},
 
-    "common cold": {
-        "symptoms": [
-            "Runny nose",
-            "Sneezing",
-            "Sore throat",
-            "Cough",
-            "Headache"
-        ],
-        "causes": [
-            "Rhinovirus infection"
-        ],
-        "treatment": [
-            "Drink warm fluids",
-            "Take rest",
-            "Steam inhalation"
-        ],
-        "prevention": [
-            "Wash hands",
-            "Avoid close contact with infected people"
-        ],
-        "doctor": "General Physician"
-    },
+"common cold": {
+    "symptoms": [
+        "Runny nose",
+        "Sneezing",
+        "Sore throat",
+        "Cough",
+        "Headache"
+    ],
+    "causes": [
+        "Rhinovirus infection"
+    ],
+    "treatment": [
+        "Drink warm fluids",
+        "Take rest",
+        "Steam inhalation"
+    ],
+    "prevention": [
+        "Wash hands",
+        "Avoid close contact with infected people"
+    ],
+    "doctor": "General Physician"
+},
 
-    "covid-19": {
-        "symptoms": [
-            "Fever",
-            "Cough",
-            "Loss of smell",
-            "Loss of taste",
-            "Shortness of breath",
-            "Fatigue"
-        ],
-        "causes": [
-            "SARS-CoV-2 virus"
-        ],
-        "treatment": [
-            "Rest",
-            "Drink fluids",
-            "Consult doctor if symptoms worsen"
-        ],
-        "prevention": [
-            "Wear a mask",
-            "Wash hands",
-            "Maintain social distancing"
-        ],
-        "doctor": "General Physician"
-    },
+"covid-19": {
+    "symptoms": [
+        "Fever",
+        "Cough",
+        "Loss of smell",
+        "Loss of taste",
+        "Shortness of breath",
+        "Fatigue"
+    ],
+    "causes": [
+        "SARS-CoV-2 virus"
+    ],
+    "treatment": [
+        "Rest",
+        "Drink fluids",
+        "Consult doctor if symptoms worsen"
+    ],
+    "prevention": [
+        "Wear a mask",
+        "Wash hands",
+        "Maintain social distancing"
+    ],
+    "doctor": "General Physician"
+},
 
-    "typhoid": {
-        "symptoms": [
-            "High fever",
-            "Headache",
-            "Abdominal pain",
-            "Weakness",
-            "Loss of appetite"
-        ],
-        "causes": [
-            "Salmonella Typhi bacteria"
-        ],
-        "treatment": [
-            "Complete antibiotic course",
-            "Drink clean water",
-            "Eat soft foods"
-        ],
-        "prevention": [
-            "Drink boiled water",
-            "Eat hygienic food"
-        ],
-        "doctor": "General Physician"
-    },
+"typhoid": {
+    "symptoms": [
+        "High fever",
+        "Headache",
+        "Abdominal pain",
+        "Weakness",
+        "Loss of appetite"
+    ],
+    "causes": [
+        "Salmonella Typhi bacteria"
+    ],
+    "treatment": [
+        "Complete antibiotic course",
+        "Drink clean water",
+        "Eat soft foods"
+    ],
+    "prevention": [
+        "Drink boiled water",
+        "Eat hygienic food"
+    ],
+    "doctor": "General Physician"
+},
 
-    "migraine": {
-        "symptoms": [
-            "Severe headache",
-            "Nausea",
-            "Vomiting",
-            "Sensitivity to light",
-            "Blurred vision"
-        ],
-        "causes": [
-            "Stress",
-            "Hormonal changes",
-            "Lack of sleep"
-        ],
-        "treatment": [
-            "Rest in a dark room",
-            "Take prescribed medicine",
-            "Stay hydrated"
-        ],
-        "prevention": [
-            "Sleep well",
-            "Avoid stress",
-            "Avoid trigger foods"
-        ],
-        "doctor": "Neurologist"
-    },
+"migraine": {
+    "symptoms": [
+        "Severe headache",
+        "Nausea",
+        "Vomiting",
+        "Sensitivity to light",
+        "Blurred vision"
+    ],
+    "causes": [
+        "Stress",
+        "Hormonal changes",
+        "Lack of sleep"
+    ],
+    "treatment": [
+        "Rest in a dark room",
+        "Take prescribed medicine",
+        "Stay hydrated"
+    ],
+    "prevention": [
+        "Sleep well",
+        "Avoid stress",
+        "Avoid trigger foods"
+    ],
+    "doctor": "Neurologist"
+},
 
-    "food poisoning": {
-        "symptoms": [
-            "Nausea",
-            "Vomiting",
-            "Diarrhea",
-            "Abdominal pain",
-            "Fever",
-            "Dehydration"
-        ],
-        "causes": [
-            "Contaminated food",
-            "Bacteria",
-            "Viruses",
-            "Food toxins"
-        ],
-        "treatment": [
-            "Drink ORS",
-            "Stay hydrated",
-            "Eat light foods",
-            "Consult a doctor if symptoms are severe"
-        ],
-        "prevention": [
-            "Eat freshly cooked food",
-            "Wash hands before eating",
-            "Store food properly"
-        ],
-        "doctor": "General Physician"
-    },
+"food poisoning": {
+    "symptoms": [
+        "Nausea",
+        "Vomiting",
+        "Diarrhea",
+        "Abdominal pain",
+        "Fever",
+        "Dehydration"
+    ],
+    "causes": [
+        "Contaminated food",
+        "Bacteria",
+        "Viruses",
+        "Food toxins"
+    ],
+    "treatment": [
+        "Drink ORS",
+        "Stay hydrated",
+        "Eat light foods",
+        "Consult a doctor if symptoms are severe"
+    ],
+    "prevention": [
+        "Eat freshly cooked food",
+        "Wash hands before eating",
+        "Store food properly"
+    ],
+    "doctor": "General Physician"
+},
 
-    "heart disease": {
-        "symptoms": [
-            "Chest pain",
-            "Shortness of breath",
-            "Fatigue",
-            "Palpitations",
-            "Dizziness"
-        ],
-        "causes": [
-            "High cholesterol",
-            "High blood pressure",
-            "Smoking",
-            "Diabetes",
-            "Obesity"
-        ],
-        "treatment": [
-            "Take prescribed medicines",
-            "Maintain a healthy diet",
-            "Exercise regularly",
-            "Regular medical checkups"
-        ],
-        "prevention": [
-            "Avoid smoking",
-            "Exercise daily",
-            "Eat a heart-healthy diet",
-            "Control blood pressure"
-        ],
-        "doctor": "Cardiologist"
-    },
+"heart disease": {
+    "symptoms": [
+        "Chest pain",
+        "Shortness of breath",
+        "Fatigue",
+        "Palpitations",
+        "Dizziness"
+    ],
+    "causes": [
+        "High cholesterol",
+        "High blood pressure",
+        "Smoking",
+        "Diabetes",
+        "Obesity"
+    ],
+    "treatment": [
+        "Take prescribed medicines",
+        "Maintain a healthy diet",
+        "Exercise regularly",
+        "Regular medical checkups"
+    ],
+    "prevention": [
+        "Avoid smoking",
+        "Exercise daily",
+        "Eat a heart-healthy diet",
+        "Control blood pressure"
+    ],
+    "doctor": "Cardiologist"
+},
 
-    "diabetes": {
-        "symptoms": [
-            "Frequent urination",
-            "Excessive thirst",
-            "Blurred vision",
-            "Weight loss",
-            "Fatigue"
-        ],
-        "causes": [
-            "Insulin deficiency",
-            "Insulin resistance",
-            "Genetic factors"
-        ],
-        "treatment": [
-            "Monitor blood sugar",
-            "Exercise regularly",
-            "Follow a healthy diet",
-            "Take prescribed medicines"
-        ],
-        "prevention": [
-            "Maintain healthy weight",
-            "Exercise daily",
-            "Reduce sugar intake"
-        ],
-        "doctor": "Endocrinologist"
-    },
+"diabetes": {
+    "symptoms": [
+        "Frequent urination",
+        "Excessive thirst",
+        "Blurred vision",
+        "Weight loss",
+        "Fatigue"
+    ],
+    "causes": [
+        "Insulin deficiency",
+        "Insulin resistance",
+        "Genetic factors"
+    ],
+    "treatment": [
+        "Monitor blood sugar",
+        "Exercise regularly",
+        "Follow a healthy diet",
+        "Take prescribed medicines"
+    ],
+    "prevention": [
+        "Maintain healthy weight",
+        "Exercise daily",
+        "Reduce sugar intake"
+    ],
+    "doctor": "Endocrinologist"
+},
 
-    "hypertension": {
-        "symptoms": [
-            "Headache",
-            "Dizziness",
-            "Chest pain",
-            "Blurred vision",
-            "Fatigue"
-        ],
-        "causes": [
-            "High salt intake",
-            "Stress",
-            "Obesity",
-            "Family history"
-        ],
-        "treatment": [
-            "Take blood pressure medicines",
-            "Reduce salt intake",
-            "Exercise regularly"
-        ],
-        "prevention": [
-            "Eat healthy foods",
-            "Reduce stress",
-            "Maintain healthy weight"
-        ],
-        "doctor": "Cardiologist"
-    },
+"hypertension": {
+    "symptoms": [
+        "Headache",
+        "Dizziness",
+        "Chest pain",
+        "Blurred vision",
+        "Fatigue"
+    ],
+    "causes": [
+        "High salt intake",
+        "Stress",
+        "Obesity",
+        "Family history"
+    ],
+    "treatment": [
+        "Take blood pressure medicines",
+        "Reduce salt intake",
+        "Exercise regularly"
+    ],
+    "prevention": [
+        "Eat healthy foods",
+        "Reduce stress",
+        "Maintain healthy weight"
+    ],
+    "doctor": "Cardiologist"
+},
 
-    "asthma": {
-        "symptoms": [
-            "Wheezing",
-            "Shortness of breath",
-            "Cough",
-            "Chest tightness"
-        ],
-        "causes": [
-            "Allergies",
-            "Dust",
-            "Cold air",
-            "Respiratory infections"
-        ],
-        "treatment": [
-            "Use inhaler",
-            "Take prescribed medicines",
-            "Avoid triggers"
-        ],
-        "prevention": [
-            "Avoid dust",
-            "Do not smoke",
-            "Carry inhaler"
-        ],
-        "doctor": "Pulmonologist"
-    },
+"asthma": {
+    "symptoms": [
+        "Wheezing",
+        "Shortness of breath",
+        "Cough",
+        "Chest tightness"
+    ],
+    "causes": [
+        "Allergies",
+        "Dust",
+        "Cold air",
+        "Respiratory infections"
+    ],
+    "treatment": [
+        "Use inhaler",
+        "Take prescribed medicines",
+        "Avoid triggers"
+    ],
+    "prevention": [
+        "Avoid dust",
+        "Do not smoke",
+        "Carry inhaler"
+    ],
+    "doctor": "Pulmonologist"
+},
 
-    "allergy": {
-        "symptoms": [
-            "Skin rash",
-            "Itching",
-            "Sneezing",
-            "Runny nose",
-            "Watery eyes"
-        ],
-        "causes": [
-            "Dust",
-            "Pollen",
-            "Pet dander",
-            "Certain foods",
-            "Medicines"
-        ],
-        "treatment": [
-            "Take antihistamines",
-            "Avoid allergens",
-            "Consult a doctor if symptoms worsen"
-        ],
-        "prevention": [
-            "Keep surroundings clean",
-            "Avoid known allergens",
-            "Wear a mask in dusty areas"
-        ],
-        "doctor": "Dermatologist / Allergist"
-    },
+"allergy": {
+    "symptoms": [
+        "Skin rash",
+        "Itching",
+        "Sneezing",
+        "Runny nose",
+        "Watery eyes"
+    ],
+    "causes": [
+        "Dust",
+        "Pollen",
+        "Pet dander",
+        "Certain foods",
+        "Medicines"
+    ],
+    "treatment": [
+        "Take antihistamines",
+        "Avoid allergens",
+        "Consult a doctor if symptoms worsen"
+    ],
+    "prevention": [
+        "Keep surroundings clean",
+        "Avoid known allergens",
+        "Wear a mask in dusty areas"
+    ],
+    "doctor": "Dermatologist / Allergist"
+},
 
-    "arthritis": {
-        "symptoms": [
-            "Joint pain",
-            "Joint stiffness",
-            "Swelling",
-            "Reduced movement"
-        ],
-        "causes": [
-            "Age",
-            "Joint wear and tear",
-            "Autoimmune disorders"
-        ],
-        "treatment": [
-            "Exercise regularly",
-            "Pain relief medicines",
-            "Physiotherapy"
-        ],
-        "prevention": [
-            "Maintain healthy weight",
-            "Exercise daily",
-            "Avoid joint injuries"
-        ],
-        "doctor": "Orthopedic Specialist"
-    },
+"arthritis": {
+    "symptoms": [
+        "Joint pain",
+        "Joint stiffness",
+        "Swelling",
+        "Reduced movement"
+    ],
+    "causes": [
+        "Age",
+        "Joint wear and tear",
+        "Autoimmune disorders"
+    ],
+    "treatment": [
+        "Exercise regularly",
+        "Pain relief medicines",
+        "Physiotherapy"
+    ],
+    "prevention": [
+        "Maintain healthy weight",
+        "Exercise daily",
+        "Avoid joint injuries"
+    ],
+    "doctor": "Orthopedic Specialist"
+},
 
-    "depression": {
-        "symptoms": [
-            "Persistent sadness",
-            "Loss of interest",
-            "Fatigue",
-            "Sleep problems",
-            "Difficulty concentrating"
-        ],
-        "causes": [
-            "Stress",
-            "Genetics",
-            "Chemical imbalance",
-            "Life events"
-        ],
-        "treatment": [
-            "Counselling",
-            "Psychotherapy",
-            "Medicines prescribed by psychiatrist"
-        ],
-        "prevention": [
-            "Exercise regularly",
-            "Maintain social connections",
-            "Seek help early"
-        ],
-        "doctor": "Psychiatrist"
-    },
+"depression": {
+    "symptoms": [
+        "Persistent sadness",
+        "Loss of interest",
+        "Fatigue",
+        "Sleep problems",
+        "Difficulty concentrating"
+    ],
+    "causes": [
+        "Stress",
+        "Genetics",
+        "Chemical imbalance",
+        "Life events"
+    ],
+    "treatment": [
+        "Counselling",
+        "Psychotherapy",
+        "Medicines prescribed by psychiatrist"
+    ],
+    "prevention": [
+        "Exercise regularly",
+        "Maintain social connections",
+        "Seek help early"
+    ],
+    "doctor": "Psychiatrist"
+},
 
-    "anxiety disorder": {
-        "symptoms": [
-            "Excessive worry",
-            "Restlessness",
-            "Fast heartbeat",
-            "Sweating",
-            "Difficulty sleeping"
-        ],
-        "causes": [
-            "Stress",
-            "Genetics",
-            "Traumatic experiences"
-        ],
-        "treatment": [
-            "Counselling",
-            "Breathing exercises",
-            "Medicines if prescribed"
-        ],
-        "prevention": [
-            "Meditation",
-            "Regular exercise",
-            "Adequate sleep"
-        ],
-        "doctor": "Psychologist / Psychiatrist"
-    },
+"anxiety disorder": {
+    "symptoms": [
+        "Excessive worry",
+        "Restlessness",
+        "Fast heartbeat",
+        "Sweating",
+        "Difficulty sleeping"
+    ],
+    "causes": [
+        "Stress",
+        "Genetics",
+        "Traumatic experiences"
+    ],
+    "treatment": [
+        "Counselling",
+        "Breathing exercises",
+        "Medicines if prescribed"
+    ],
+    "prevention": [
+        "Meditation",
+        "Regular exercise",
+        "Adequate sleep"
+    ],
+    "doctor": "Psychologist / Psychiatrist"
+},
 
-    "gerd": {
-        "symptoms": [
-            "Heartburn",
-            "Acid reflux",
-            "Chest discomfort",
-            "Difficulty swallowing"
-        ],
-        "causes": [
-            "Weak lower esophageal sphincter",
-            "Obesity",
-            "Spicy foods",
-            "Large meals"
-        ],
-        "treatment": [
-            "Take antacids or prescribed medicines",
-            "Avoid spicy foods",
-            "Eat smaller meals"
-        ],
-        "prevention": [
-            "Maintain healthy weight",
-            "Avoid lying down after meals",
-            "Reduce caffeine intake"
-        ],
-        "doctor": "Gastroenterologist"
-    },
+"gerd": {
+    "symptoms": [
+        "Heartburn",
+        "Acid reflux",
+        "Chest discomfort",
+        "Difficulty swallowing"
+    ],
+    "causes": [
+        "Weak lower esophageal sphincter",
+        "Obesity",
+        "Spicy foods",
+        "Large meals"
+    ],
+    "treatment": [
+        "Take antacids or prescribed medicines",
+        "Avoid spicy foods",
+        "Eat smaller meals"
+    ],
+    "prevention": [
+        "Maintain healthy weight",
+        "Avoid lying down after meals",
+        "Reduce caffeine intake"
+    ],
+    "doctor": "Gastroenterologist"
+},
 
-    "constipation": {
-        "symptoms": [
-            "Infrequent bowel movements",
-            "Hard stools",
-            "Abdominal discomfort",
-            "Bloating"
-        ],
-        "causes": [
-            "Low fiber diet",
-            "Not drinking enough water",
-            "Lack of exercise"
-        ],
-        "treatment": [
-            "Drink more water",
-            "Eat fiber-rich foods",
-            "Exercise regularly"
-        ],
-        "prevention": [
-            "Eat fruits and vegetables",
-            "Drink 2-3 litres of water daily",
-            "Stay physically active"
-        ],
-        "doctor": "Gastroenterologist"
-    },
+"constipation": {
+    "symptoms": [
+        "Infrequent bowel movements",
+        "Hard stools",
+        "Abdominal discomfort",
+        "Bloating"
+    ],
+    "causes": [
+        "Low fiber diet",
+        "Not drinking enough water",
+        "Lack of exercise"
+    ],
+    "treatment": [
+        "Drink more water",
+        "Eat fiber-rich foods",
+        "Exercise regularly"
+    ],
+    "prevention": [
+        "Eat fruits and vegetables",
+        "Drink 2-3 litres of water daily",
+        "Stay physically active"
+    ],
+    "doctor": "Gastroenterologist"
+},
 
-    "ear infection": {
-        "symptoms": [
-            "Ear pain",
-            "Difficulty hearing",
-            "Fever",
-            "Fluid discharge from ear"
-        ],
-        "causes": [
-            "Bacterial infection",
-            "Viral infection"
-        ],
-        "treatment": [
-            "Take prescribed antibiotics",
-            "Keep ear dry",
-            "Consult an ENT specialist"
-        ],
-        "prevention": [
-            "Maintain ear hygiene",
-            "Avoid inserting objects into the ear"
-        ],
-        "doctor": "ENT Specialist"
-    },
+"ear infection": {
+    "symptoms": [
+        "Ear pain",
+        "Difficulty hearing",
+        "Fever",
+        "Fluid discharge from ear"
+    ],
+    "causes": [
+        "Bacterial infection",
+        "Viral infection"
+    ],
+    "treatment": [
+        "Take prescribed antibiotics",
+        "Keep ear dry",
+        "Consult an ENT specialist"
+    ],
+    "prevention": [
+        "Maintain ear hygiene",
+        "Avoid inserting objects into the ear"
+    ],
+    "doctor": "ENT Specialist"
+},
 
-    "conjunctivitis": {
-        "symptoms": [
-            "Red eyes",
-            "Itchy eyes",
-            "Watery eyes",
-            "Eye discharge"
-        ],
-        "causes": [
-            "Virus",
-            "Bacteria",
-            "Allergy"
-        ],
-        "treatment": [
-            "Use prescribed eye drops",
-            "Keep eyes clean",
-            "Avoid touching eyes"
-        ],
-        "prevention": [
-            "Wash hands frequently",
-            "Do not share towels",
-            "Avoid rubbing eyes"
-        ],
-        "doctor": "Ophthalmologist"
-    },
+"conjunctivitis": {
+    "symptoms": [
+        "Red eyes",
+        "Itchy eyes",
+        "Watery eyes",
+        "Eye discharge"
+    ],
+    "causes": [
+        "Virus",
+        "Bacteria",
+        "Allergy"
+    ],
+    "treatment": [
+        "Use prescribed eye drops",
+        "Keep eyes clean",
+        "Avoid touching eyes"
+    ],
+    "prevention": [
+        "Wash hands frequently",
+        "Do not share towels",
+        "Avoid rubbing eyes"
+    ],
+    "doctor": "Ophthalmologist"
+},
 
-    "back strain": {
-        "symptoms": [
-            "Back pain",
-            "Muscle stiffness",
-            "Difficulty bending",
-            "Muscle spasms"
-        ],
-        "causes": [
-            "Heavy lifting",
-            "Poor posture",
-            "Sudden movements"
-        ],
-        "treatment": [
-            "Take rest",
-            "Apply ice or heat",
-            "Pain relief medicines if prescribed"
-        ],
-        "prevention": [
-            "Maintain proper posture",
-            "Exercise regularly",
-            "Lift heavy objects correctly"
-        ],
-        "doctor": "Orthopedic Specialist"
-    },
+"back strain": {
+    "symptoms": [
+        "Back pain",
+        "Muscle stiffness",
+        "Difficulty bending",
+        "Muscle spasms"
+    ],
+    "causes": [
+        "Heavy lifting",
+        "Poor posture",
+        "Sudden movements"
+    ],
+    "treatment": [
+        "Take rest",
+        "Apply ice or heat",
+        "Pain relief medicines if prescribed"
+    ],
+    "prevention": [
+        "Maintain proper posture",
+        "Exercise regularly",
+        "Lift heavy objects correctly"
+    ],
+    "doctor": "Orthopedic Specialist"
+},
 
-    "dengue": {
-        "symptoms": [
-            "High fever",
-            "Severe headache",
-            "Body pain",
-            "Joint pain",
-            "Skin rash",
-            "Nausea"
-        ],
-        "causes": [
-            "Dengue virus spread by Aedes mosquitoes"
-        ],
-        "treatment": [
-            "Drink plenty of fluids",
-            "Take adequate rest",
-            "Consult a doctor immediately"
-        ],
-        "prevention": [
-            "Use mosquito nets",
-            "Remove stagnant water",
-            "Use mosquito repellent"
-        ],
-        "doctor": "General Physician"
-    }
+"dengue": {
+    "symptoms": [
+        "High fever",
+        "Severe headache",
+        "Body pain",
+        "Joint pain",
+        "Skin rash",
+        "Nausea"
+    ],
+    "causes": [
+        "Dengue virus spread by Aedes mosquitoes"
+    ],
+    "treatment": [
+        "Drink plenty of fluids",
+        "Take adequate rest",
+        "Consult a doctor immediately"
+    ],
+    "prevention": [
+        "Use mosquito nets",
+        "Remove stagnant water",
+        "Use mosquito repellent"
+    ],
+    "doctor": "General Physician"
+}
 }
 
-# ==========================================
-# CUSTOM CSS
-# ==========================================
-
+==========================================
+CUSTOM CSS
+==========================================
 st.markdown("""
-<style>
 
-.main{
-    background-color:#F4F9FF;
-}
+<style> .main{ background-color:#F4F9FF; } .title{ text-align:center; color:#0F4C81; font-size:42px; font-weight:bold; } .subtitle{ text-align:center; color:gray; font-size:18px; } .card{ background:white; padding:20px; border-radius:12px; box-shadow:0px 2px 10px rgba(0,0,0,0.1); } .metric-box{ background:#E8F3FF; padding:15px; border-radius:10px; text-align:center; } </style>
 
-.title{
-    text-align:center;
-    color:#0F4C81;
-    font-size:42px;
-    font-weight:bold;
-}
-
-.subtitle{
-    text-align:center;
-    color:gray;
-    font-size:18px;
-}
-
-.card{
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    box-shadow:0px 2px 10px rgba(0,0,0,0.1);
-}
-
-.metric-box{
-    background:#E8F3FF;
-    padding:15px;
-    border-radius:10px;
-    text-align:center;
-}
-
-</style>
 """, unsafe_allow_html=True)
 
-# ==========================================
-# SIDEBAR
-# ==========================================
-
+==========================================
+SIDEBAR
+==========================================
 st.sidebar.title("🏥 MediAssist AI")
 
 menu = st.sidebar.radio(
-    "Navigation",
-    [
-        "🏠 Home",
-        "⚖ BMI Calculator",
-        "💊 Medicine Search",
-        "📄 Prescription Reader",
-        "❤️ Health Tips",
-        "🤖 Health Chatbot",
-        "About"
-    ]
+"Navigation",
+[
+"🏠 Home",
+"⚖ BMI Calculator",
+"💊 Medicine Search",
+"📄 Prescription Reader",
+"❤️ Health Tips",
+"🤖 Health Chatbot",
+"About"
+]
 )
 
-# ==========================================
-# HOME PAGE
-# ==========================================
-
+==========================================
+HOME PAGE
+==========================================
 if menu == "🏠 Home":
 
-    st.markdown(
-        "<div class='title'>🏥 MediAssist AI</div>",
-        unsafe_allow_html=True
-    )
+st.markdown(
+    "<div class='title'>🏥 MediAssist AI</div>",
+    unsafe_allow_html=True
+)
 
-    st.markdown(
-        "<div class='subtitle'>Intelligent Healthcare Assistant</div>",
-        unsafe_allow_html=True
-    )
+st.markdown(
+    "<div class='subtitle'>Intelligent Healthcare Assistant</div>",
+    unsafe_allow_html=True
+)
 
-    st.write("")
+st.write("")
 
-    col1, col2, col3 = st.columns(3)
+col1, col2, col3 = st.columns(3)
 
-    with col1:
-        st.info("🤖 AI Health Chatbot")
+with col1:
+    st.info("🤖 AI Health Chatbot")
 
-    with col2:
-        st.success("⚖ BMI Calculator")
+with col2:
+    st.success("⚖ BMI Calculator")
 
-    with col3:
-        st.warning("💊 Medicine Information")
+with col3:
+    st.warning("💊 Medicine Information")
 
-    st.write("")
+st.write("")
 
-    col4, col5, col6 = st.columns(3)
+col4, col5, col6 = st.columns(3)
 
-    with col4:
-        st.info("📄 Prescription Reader")
+with col4:
+    st.info("📄 Prescription Reader")
 
-    with col5:
-        st.success("❤️ Health Tips")
+with col5:
+    st.success("❤️ Health Tips")
 
-    with col6:
-        st.warning("🤖 AI Health Chatbot")
+with col6:
+    st.warning("🤖 AI Health Chatbot")
 
-    st.divider()
+st.divider()
 
-    st.markdown("""
-### 🚀 Features
-
+st.markdown("""
+🚀 Features
 ✅ BMI Calculator
 
 ✅ Medicine Information Search
@@ -742,156 +677,151 @@ if menu == "🏠 Home":
 
 """)
 
-# ==========================================
-# BMI CALCULATOR
-# ==========================================
-
+==========================================
+BMI CALCULATOR
+==========================================
 elif menu == "⚖ BMI Calculator":
 
-    st.title("⚖ BMI Calculator")
+st.title("⚖ BMI Calculator")
 
-    col1, col2 = st.columns(2)
+col1, col2 = st.columns(2)
 
-    with col1:
-        height = st.number_input(
-            "Height (cm)",
-            min_value=50,
-            max_value=250,
-            value=170
-        )
-
-    with col2:
-        weight = st.number_input(
-            "Weight (kg)",
-            min_value=10,
-            max_value=250,
-            value=65
-        )
-
-    if st.button("Calculate BMI"):
-
-        bmi = weight / ((height / 100) ** 2)
-
-        st.metric("BMI", f"{bmi:.2f}")
-
-        if bmi < 18.5:
-            status = "Underweight"
-            color = "warning"
-            tips = [
-                "Increase protein intake",
-                "Eat healthy meals",
-                "Exercise regularly"
-            ]
-
-        elif bmi < 25:
-            status = "Normal"
-            color = "success"
-            tips = [
-                "Maintain healthy diet",
-                "Continue regular exercise",
-                "Drink enough water"
-            ]
-
-        elif bmi < 30:
-            status = "Overweight"
-            color = "warning"
-            tips = [
-                "Reduce junk food",
-                "Walk 30 minutes daily",
-                "Drink more water"
-            ]
-
-        else:
-            status = "Obese"
-            color = "error"
-            tips = [
-                "Consult a doctor",
-                "Follow a calorie-controlled diet",
-                "Exercise regularly"
-            ]
-
-        if color == "success":
-            st.success(status)
-        elif color == "warning":
-            st.warning(status)
-        else:
-            st.error(status)
-
-        st.subheader("Health Tips")
-
-        for tip in tips:
-            st.write("✅", tip)
-
-        st.info(
-            "BMI is only a screening tool and does not diagnose body fat or medical conditions."
-        )
-
-# ==========================================
-# MEDICINE SEARCH
-# ==========================================
-
-elif menu == "💊 Medicine Search":
-
-    st.title("💊 Medicine Information")
-
-    if medicine_df.empty:
-        st.error("medicines.csv not found.")
-
-    else:
-        medicine_name = st.text_input(
-            "Search Medicine"
-        )
-
-        if medicine_name:
-            result = medicine_df[
-                medicine_df["Medicine"].str.lower()
-                ==
-                medicine_name.lower()
-            ]
-
-            if result.empty:
-                st.warning("Medicine not found.")
-
-            else:
-                st.success("Medicine Found")
-
-                medicine = result.iloc[0]
-
-                st.subheader(medicine["Medicine"])
-
-                st.write("### Uses")
-                st.info(medicine["Uses"])
-
-                st.write("### Dosage")
-                st.success(medicine["Dosage"])
-
-                st.write("### Side Effects")
-                st.warning(medicine["SideEffects"])
-
-                st.write("### Warnings")
-                st.error(medicine["Warnings"])
-
-# ==========================================
-# PRESCRIPTION READER (OCR)
-# ==========================================
-
-elif menu == "📄 Prescription Reader":
-
-    st.title("📄 AI Prescription Reader")
-
-    uploaded_file = st.file_uploader(
-        "Upload Prescription",
-        type=["png","jpg","jpeg"]
+with col1:
+    height = st.number_input(
+        "Height (cm)",
+        min_value=50,
+        max_value=250,
+        value=170
     )
 
-    if uploaded_file:
+with col2:
+    weight = st.number_input(
+        "Weight (kg)",
+        min_value=10,
+        max_value=250,
+        value=65
+    )
 
-        image = Image.open(uploaded_file)
-        st.image(image, use_container_width=True)
+if st.button("Calculate BMI"):
 
-        if st.button("Extract Prescription"):
-            with st.spinner("Analyzing Prescription..."):
-                prompt = """
+    bmi = weight / ((height / 100) ** 2)
+
+    st.metric("BMI", f"{bmi:.2f}")
+
+    if bmi < 18.5:
+        status = "Underweight"
+        color = "warning"
+        tips = [
+            "Increase protein intake",
+            "Eat healthy meals",
+            "Exercise regularly"
+        ]
+
+    elif bmi < 25:
+        status = "Normal"
+        color = "success"
+        tips = [
+            "Maintain healthy diet",
+            "Continue regular exercise",
+            "Drink enough water"
+        ]
+
+    elif bmi < 30:
+        status = "Overweight"
+        color = "warning"
+        tips = [
+            "Reduce junk food",
+            "Walk 30 minutes daily",
+            "Drink more water"
+        ]
+
+    else:
+        status = "Obese"
+        color = "error"
+        tips = [
+            "Consult a doctor",
+            "Follow a calorie-controlled diet",
+            "Exercise regularly"
+        ]
+
+    if color == "success":
+        st.success(status)
+    elif color == "warning":
+        st.warning(status)
+    else:
+        st.error(status)
+
+    st.subheader("Health Tips")
+
+    for tip in tips:
+        st.write("✅", tip)
+
+    st.info(
+        "BMI is only a screening tool and does not diagnose body fat or medical conditions."
+    )
+==========================================
+MEDICINE SEARCH
+==========================================
+elif menu == "💊 Medicine Search":
+
+st.title("💊 Medicine Information")
+
+if medicine_df.empty:
+    st.error("medicines.csv not found.")
+
+else:
+    medicine_name = st.text_input(
+        "Search Medicine"
+    )
+
+    if medicine_name:
+        result = medicine_df[
+            medicine_df["Medicine"].str.lower()
+            ==
+            medicine_name.lower()
+        ]
+
+        if result.empty:
+            st.warning("Medicine not found.")
+
+        else:
+            st.success("Medicine Found")
+
+            medicine = result.iloc[0]
+
+            st.subheader(medicine["Medicine"])
+
+            st.write("### Uses")
+            st.info(medicine["Uses"])
+
+            st.write("### Dosage")
+            st.success(medicine["Dosage"])
+
+            st.write("### Side Effects")
+            st.warning(medicine["SideEffects"])
+
+            st.write("### Warnings")
+            st.error(medicine["Warnings"])
+==========================================
+PRESCRIPTION READER (OCR)
+==========================================
+elif menu == "📄 Prescription Reader":
+
+st.title("📄 AI Prescription Reader")
+
+uploaded_file = st.file_uploader(
+    "Upload Prescription",
+    type=["png","jpg","jpeg"]
+)
+
+if uploaded_file:
+
+    image = Image.open(uploaded_file)
+    st.image(image, use_container_width=True)
+
+    if st.button("Extract Prescription"):
+        with st.spinner("Analyzing Prescription..."):
+            prompt = """
 You are a medical OCR assistant.
 
 Read this prescription carefully.
@@ -921,99 +851,196 @@ If something is unreadable write 'Unclear'.
 Do not guess.
 """
 
-                try:
-                    image = Image.open(uploaded_file)
-                    response = client.models.generate_content(
-                        model="gemini-2.5-flash-lite",
-                        contents=[prompt,image]
-                    )
-        
-                    st.subheader("Extracted Prescription")
-                    st.write(response.text)
-        
-                    st.download_button(
-                        "Download",
-                        response.text,
-                        file_name="prescription.txt"
-                    )
-        
-                except Exception as e:
-                    st.error(f"Gemini Error:\n{e}")
-# ==========================================
-# HEALTH TIPS
-# ==========================================
-
+            try:
+                image = Image.open(uploaded_file)
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash-lite",
+                    contents=[prompt,image]
+                )
+    
+                st.subheader("Extracted Prescription")
+                st.write(response.text)
+    
+                st.download_button(
+                    "Download",
+                    response.text,
+                    file_name="prescription.txt"
+                )
+    
+            except Exception as e:
+                st.error(f"Gemini Error:\n{e}")
+==========================================
+HEALTH TIPS
+==========================================
 elif menu == "❤️ Health Tips":
 
-    st.title("❤️ Daily Health Tips")
+st.title("❤️ Daily Health Tips")
 
-    tips = [
-        "Drink at least 2-3 litres of water daily.",
-        "Sleep for 7-8 hours every night.",
-        "Exercise for at least 30 minutes.",
-        "Eat fresh fruits and vegetables.",
-        "Reduce sugar and salt intake.",
-        "Avoid smoking and alcohol.",
-        "Wash your hands regularly.",
-        "Take medicines only as prescribed.",
-        "Manage stress through meditation.",
-        "Schedule regular health checkups."
-    ]
+tips = [
+    "Drink at least 2-3 litres of water daily.",
+    "Sleep for 7-8 hours every night.",
+    "Exercise for at least 30 minutes.",
+    "Eat fresh fruits and vegetables.",
+    "Reduce sugar and salt intake.",
+    "Avoid smoking and alcohol.",
+    "Wash your hands regularly.",
+    "Take medicines only as prescribed.",
+    "Manage stress through meditation.",
+    "Schedule regular health checkups."
+]
 
-    for tip in tips:
-        st.success("✅ " + tip)
-
-# ==========================================
-# AI HEALTH CHATBOT
-# ==========================================
-
+for tip in tips:
+    st.success("✅ " + tip)
+==========================================
+AI HEALTH CHATBOT
+==========================================
 elif menu == "🤖 Health Chatbot":
 
-    st.title("🤖 MediAssist AI Chatbot")
+st.title("🤖 MediAssist AI Chatbot")
 
-    question = st.text_area(
-        "Ask any health-related question"
-    )
+st.write("Ask questions like:")
+st.write("- Symptoms of Fever")
+st.write("- Causes of Diabetes")
+st.write("- Treatment for Asthma")
+st.write("- Prevention of Dengue")
+st.write("- Doctor for Migraine")
+st.write("- Uses of Paracetamol")
 
-    if st.button("Ask AI"):
+question = st.text_input("Ask your health question")
 
-        if question.strip():
+if st.button("Ask"):
 
-            with st.spinner("Thinking..."):
+    q = question.lower()
 
-                try:
+    found = False
 
-                    answer = ask_ai(question)
+    # Greetings
+    if q in ["hi", "hello", "hey", "good morning", "good evening"]:
 
-                    st.success(answer)
+        st.success("Hello 👋 Welcome to MediAssist AI!")
 
-                except Exception as e:
+        st.info("You can ask about symptoms, causes, treatment, prevention, doctors or medicines.")
 
-                    st.error(f"Error: {e}")
+        found = True
 
-# ==========================================
-# ABOUT PAGE
-# ==========================================
+    # Disease Knowledge
+    for disease, info in medical_data.items():
 
+        if disease in q:
+
+            found = True
+
+            if "symptom" in q:
+
+                st.subheader("Symptoms")
+
+                for item in info["symptoms"]:
+                    st.write("✅", item)
+
+            elif "cause" in q:
+
+                st.subheader("Causes")
+
+                for item in info["causes"]:
+                    st.write("✅", item)
+
+            elif "treatment" in q:
+
+                st.subheader("Treatment")
+
+                for item in info["treatment"]:
+                    st.write("✅", item)
+
+            elif "prevent" in q:
+
+                st.subheader("Prevention")
+
+                for item in info["prevention"]:
+                    st.write("✅", item)
+
+            elif "doctor" in q:
+
+                st.subheader("Recommended Specialist")
+
+                st.success(info["doctor"])
+
+            else:
+
+                st.info("Please ask about symptoms, causes, treatment, prevention or doctor.")
+
+            break
+
+    # Medicine Search
+    if not found and not medicine_df.empty:
+
+        for _, row in medicine_df.iterrows():
+
+            if row["Medicine"].lower() in q:
+
+                found = True
+
+                st.success(row["Medicine"])
+
+                st.write("### Uses")
+                st.write(row["Uses"])
+
+                st.write("### Dosage")
+                st.write(row["Dosage"])
+
+                st.write("### Side Effects")
+                st.write(row["Side Effects"])
+
+                st.write("### Warnings")
+                st.write(row["Warnings"])
+
+                break
+
+    if not found:
+
+        st.warning("Sorry, I couldn't understand your question.")
+
+        st.info("""
+Try asking:
+
+• Symptoms of Fever
+
+• Causes of Diabetes
+
+• Treatment for Asthma
+
+• Prevention of Dengue
+
+• Doctor for Migraine
+
+• Uses of Paracetamol
+""")
+
+==========================================
+ABOUT PAGE
+==========================================
 elif menu == "About":
 
-    st.title("About MediAssist AI")
+st.title("About MediAssist AI")
 
-    st.markdown("""
-# 🏥 MediAssist AI
-
+st.markdown("""
+🏥 MediAssist AI
 An AI-powered healthcare assistant developed using:
 
-- Streamlit
-- Python
-- Machine Learning
-- Random Forest Classifier
-- EasyOCR
-- Pandas
-- NumPy
+Streamlit
 
-## Features
+Python
 
+Machine Learning
+
+Random Forest Classifier
+
+EasyOCR
+
+Pandas
+
+NumPy
+
+Features
 ✅ BMI Calculator
 
 ✅ Medicine Information
@@ -1022,11 +1049,10 @@ An AI-powered healthcare assistant developed using:
 
 ✅ Health Chatbot
 
-## Developer
-
+Developer
 Developed by:
 
-**Dharshini Natarajan**
+Dharshini Natarajan
 
 B.Sc Computer Science with Artificial Intelligence
 
@@ -1034,7 +1060,8 @@ B.Sc Computer Science with Artificial Intelligence
 st.markdown("---")
 
 st.caption(
-    "© 2026 MediAssist AI | "
-    "Educational Project | "
-    "Not a substitute for professional medical advice."
+"© 2026 MediAssist AI | "
+"Educational Project | "
+"Not a substitute for professional medical advice."
 )
+
